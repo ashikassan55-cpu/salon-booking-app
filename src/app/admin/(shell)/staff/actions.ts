@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { staffSchema } from "@/lib/validation/staff";
+import { createStaffSchema } from "@/lib/validation/staff";
 import { staffServicePricingListSchema } from "@/lib/validation/staff-service";
 
 export type StaffFormState = { error: string | null };
@@ -63,6 +63,8 @@ async function replaceStaffServices(
 
 export async function createStaff(formData: FormData): Promise<StaffFormState> {
   const t = await getTranslations("AdminStaff");
+  const tValidation = await getTranslations("Validation");
+  const staffSchema = createStaffSchema(tValidation);
 
   const scheduleRaw = formData.get("schedule");
   let schedule: unknown;
@@ -131,6 +133,8 @@ export async function updateStaff(
   formData: FormData,
 ): Promise<StaffFormState> {
   const t = await getTranslations("AdminStaff");
+  const tValidation = await getTranslations("Validation");
+  const staffSchema = createStaffSchema(tValidation);
 
   const scheduleRaw = formData.get("schedule");
   let schedule: unknown;

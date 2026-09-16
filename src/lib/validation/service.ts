@@ -1,17 +1,22 @@
 import { z } from "zod";
+import type { getTranslations } from "next-intl/server";
 
-export const serviceSchema = z.object({
-  name: z.string().trim().min(2, "Enter a service name"),
-  description: z
-    .string()
-    .trim()
-    .max(500, "Keep the description under 500 characters")
-    .optional(),
-  price: z.coerce.number().positive("Enter a valid price"),
-  duration_minutes: z.coerce
-    .number()
-    .int()
-    .positive("Enter a valid duration"),
-});
+type Translator = Awaited<ReturnType<typeof getTranslations>>;
 
-export type ServiceInput = z.infer<typeof serviceSchema>;
+export function createServiceSchema(t: Translator) {
+  return z.object({
+    name: z.string().trim().min(2, t("service.nameMin")),
+    description: z
+      .string()
+      .trim()
+      .max(500, t("service.descriptionMax"))
+      .optional(),
+    price: z.coerce.number().positive(t("service.priceInvalid")),
+    duration_minutes: z.coerce
+      .number()
+      .int()
+      .positive(t("service.durationInvalid")),
+  });
+}
+
+export type ServiceInput = z.infer<ReturnType<typeof createServiceSchema>>;

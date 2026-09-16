@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { serviceSchema } from "@/lib/validation/service";
+import { createServiceSchema } from "@/lib/validation/service";
 
 export type ServiceFormState = { error: string | null };
 
@@ -29,6 +29,8 @@ export async function createService(
   formData: FormData,
 ): Promise<ServiceFormState> {
   const t = await getTranslations("AdminServices");
+  const tValidation = await getTranslations("Validation");
+  const serviceSchema = createServiceSchema(tValidation);
 
   const result = serviceSchema.safeParse({
     name: formData.get("name"),
@@ -73,6 +75,8 @@ export async function updateService(
   formData: FormData,
 ): Promise<ServiceFormState> {
   const t = await getTranslations("AdminServices");
+  const tValidation = await getTranslations("Validation");
+  const serviceSchema = createServiceSchema(tValidation);
 
   const result = serviceSchema.safeParse({
     name: formData.get("name"),

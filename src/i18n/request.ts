@@ -35,6 +35,7 @@ async function loadMessages(locale: AppLocale) {
     adminHero,
     adminSettings,
     adminLogin,
+    validation,
   ] = await Promise.all([
     import(`../../messages/${locale}/public-header.json`),
     import(`../../messages/${locale}/public-footer.json`),
@@ -53,6 +54,7 @@ async function loadMessages(locale: AppLocale) {
     import(`../../messages/${locale}/admin-hero.json`),
     import(`../../messages/${locale}/admin-settings.json`),
     import(`../../messages/${locale}/admin-login.json`),
+    import(`../../messages/${locale}/validation.json`),
   ]);
 
   return {
@@ -73,6 +75,7 @@ async function loadMessages(locale: AppLocale) {
     ...adminHero.default,
     ...adminSettings.default,
     ...adminLogin.default,
+    ...validation.default,
   };
 }
 

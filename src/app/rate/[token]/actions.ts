@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { reviewSchema } from "@/lib/validation/review";
+import { createReviewSchema } from "@/lib/validation/review";
 
 export type ReviewFormState = {
   error: string | null;
@@ -22,6 +22,8 @@ export async function submitReview(
   formData: FormData,
 ): Promise<ReviewFormState> {
   const t = await getTranslations("PublicReview.errors");
+  const tValidation = await getTranslations("Validation");
+  const reviewSchema = createReviewSchema(tValidation);
 
   const result = reviewSchema.safeParse({
     token: formData.get("token"),

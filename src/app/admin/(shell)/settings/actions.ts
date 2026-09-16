@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { siteSettingsSchema } from "@/lib/validation/site-settings";
+import { createSiteSettingsSchema } from "@/lib/validation/site-settings";
 
 export type SettingsFormState = { error: string | null };
 
@@ -12,6 +12,8 @@ export async function updateSiteSettings(
   formData: FormData,
 ): Promise<SettingsFormState> {
   const t = await getTranslations("AdminSettings");
+  const tValidation = await getTranslations("Validation");
+  const siteSettingsSchema = createSiteSettingsSchema(tValidation);
 
   const workingHoursRaw = formData.get("workingHours");
   let workingHours: unknown;

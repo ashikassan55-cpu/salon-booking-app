@@ -1,0 +1,40 @@
+{
+  "Validation": {
+    "auth": {
+      "invalidEmail": "أدخل بريداً إلكترونياً صحيحاً",
+      "passwordMin": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل"
+    },
+    "booking": {
+      "nameMin": "أدخل اسمك الكامل",
+      "phoneInvalid": "أدخل رقم هاتف صحيحاً",
+      "serviceRequired": "اختر خدمة",
+      "stylistRequired": "اختر متخصصاً",
+      "dateRequired": "اختر تاريخاً",
+      "timeRequired": "اختر وقتاً"
+    },
+    "review": {
+      "ratingRequired": "اختر تقييماً",
+      "commentMax": "يجب ألا يتجاوز تعليقك 1000 حرف"
+    },
+    "service": {
+      "nameMin": "أدخل اسم الخدمة",
+      "descriptionMax": "يجب ألا يتجاوز الوصف 500 حرف",
+      "priceInvalid": "أدخل سعراً صحيحاً",
+      "durationInvalid": "أدخل مدة صحيحة"
+    },
+    "siteSettings": {
+      "nameMin": "أدخل اسم الصالون",
+      "taglineMin": "أدخل شعاراً",
+      "invalidEmail": "أدخل بريداً إلكترونياً صحيحاً",
+      "phoneMin": "أدخل رقم هاتف صحيحاً",
+      "whatsappDigitsOnly": "أرقام فقط، بدون + أو صفر في البداية",
+      "addressMin": "أدخل عنواناً",
+      "invalidUrl": "أدخل رابطاً صحيحاً",
+      "invalidHexColor": "أدخل رمز لون سداسي صحيح، مثل #111111"
+    },
+    "staff": {
+      "nameMin": "أدخل اسم المتخصص",
+      "roleMin": "أدخل الدور أو المسمى الوظيفي"
+    }
+  }
+}

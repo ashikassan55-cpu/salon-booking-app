@@ -5,7 +5,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { getSiteSettings } from "@/lib/settings";
 import { formatInSalonTimezone, salonDayRangeUtc, salonLocalToUtcDate } from "@/lib/timezone";
-import { bookingSchema } from "@/lib/validation/booking";
+import { createBookingSchema } from "@/lib/validation/booking";
 import {
   computeStaffAvailableSlots,
   getEffectivePrice,
@@ -153,6 +153,9 @@ export async function submitBooking(
     typeof dateStr === "string" && typeof timeStr === "string" && dateStr && timeStr
       ? salonLocalToUtcDate(dateStr, timeStr)
       : undefined;
+
+  const tValidation = await getTranslations("Validation");
+  const bookingSchema = createBookingSchema(tValidation);
 
   const result = bookingSchema.safeParse({
     customerName: formData.get("customerName"),

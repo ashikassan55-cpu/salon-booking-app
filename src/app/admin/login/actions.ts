@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { loginSchema } from "@/lib/validation/auth";
+import { createLoginSchema } from "@/lib/validation/auth";
 
 export type LoginState = {
   error: string | null;
@@ -14,6 +14,8 @@ export async function login(
   formData: FormData,
 ): Promise<LoginState> {
   const t = await getTranslations("AdminLogin");
+  const tValidation = await getTranslations("Validation");
+  const loginSchema = createLoginSchema(tValidation);
 
   const parsed = loginSchema.safeParse({
     email: formData.get("email"),

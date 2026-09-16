@@ -1,8 +1,13 @@
 import { z } from "zod";
+import type { getTranslations } from "next-intl/server";
 
-export const loginSchema = z.object({
-  email: z.string().trim().email("Enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
+type Translator = Awaited<ReturnType<typeof getTranslations>>;
 
-export type LoginInput = z.infer<typeof loginSchema>;
+export function createLoginSchema(t: Translator) {
+  return z.object({
+    email: z.string().trim().email(t("auth.invalidEmail")),
+    password: z.string().min(6, t("auth.passwordMin")),
+  });
+}
+
+export type LoginInput = z.infer<ReturnType<typeof createLoginSchema>>;

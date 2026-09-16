@@ -1,0 +1,40 @@
+{
+  "Validation": {
+    "auth": {
+      "invalidEmail": "Enter a valid email address",
+      "passwordMin": "Password must be at least 6 characters"
+    },
+    "booking": {
+      "nameMin": "Enter your full name",
+      "phoneInvalid": "Enter a valid phone number",
+      "serviceRequired": "Choose a service",
+      "stylistRequired": "Choose a stylist",
+      "dateRequired": "Choose a date",
+      "timeRequired": "Choose a time"
+    },
+    "review": {
+      "ratingRequired": "Pick a rating",
+      "commentMax": "Keep your comment under 1000 characters"
+    },
+    "service": {
+      "nameMin": "Enter a service name",
+      "descriptionMax": "Keep the description under 500 characters",
+      "priceInvalid": "Enter a valid price",
+      "durationInvalid": "Enter a valid duration"
+    },
+    "siteSettings": {
+      "nameMin": "Enter a salon name",
+      "taglineMin": "Enter a tagline",
+      "invalidEmail": "Enter a valid email address",
+      "phoneMin": "Enter a valid phone number",
+      "whatsappDigitsOnly": "Digits only, no + or leading 0",
+      "addressMin": "Enter an address",
+      "invalidUrl": "Enter a valid URL",
+      "invalidHexColor": "Enter a valid hex color, e.g. #111111"
+    },
+    "staff": {
+      "nameMin": "Enter a stylist name",
+      "roleMin": "Enter a role or title"
+    }
+  }
+}
