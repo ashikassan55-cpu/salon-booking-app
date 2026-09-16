@@ -1,0 +1,10 @@
+{
+  "PublicServices": {
+    "eyebrow": "Choose your best",
+    "heading": "Explore our services",
+    "empty": "Services will appear here once they're added.",
+    "durationMinutes": "{minutes} min",
+    "durationHours": "{hours}h",
+    "durationHoursMinutes": "{hours}h {minutes}min"
+  }
+}

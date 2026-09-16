@@ -1,0 +1,40 @@
+{
+  "PublicBooking": {
+    "eyebrow": "Reserve your spot",
+    "heading": "Choose your perfect service",
+    "yourName": "Your Name",
+    "yourPhone": "Your Phone",
+    "chooseService": "Choose Service",
+    "selectService": "Select a service",
+    "durationUnit": "{minutes} min",
+    "chooseStylist": "Choose Stylist",
+    "anyProfessional": "Any Professional",
+    "maxAvailability": "Maximum availability",
+    "fromPrice": "from {price}",
+    "chooseTime": "Choose Time",
+    "pickDateForTimes": "Pick a date to see available times.",
+    "loadingTimes": "Loading available times…",
+    "noTimesLeft": "No time slots left on this day — try another date.",
+    "chooseDate": "Choose Date",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "booking": "Booking...",
+    "bookAppointment": "Book an Appointment",
+    "checkForm": "Please check the form",
+    "serviceUnavailable": "That service is no longer available — please choose another.",
+    "noStylistForService": "No stylist currently offers that service — please choose another.",
+    "slotTaken": "That time was just taken — please pick another.",
+    "stylistUnavailable": "That stylist is no longer available — please choose another.",
+    "submissionError": "Something went wrong submitting your booking — please try again.",
+    "whatsapp": {
+      "title": "*New Booking Request!* ✂️",
+      "name": "Name:",
+      "phone": "Phone:",
+      "service": "Service:",
+      "stylist": "Stylist:",
+      "date": "Date:",
+      "at": "at",
+      "confirm": "Please confirm this appointment."
+    }
+  }
+}

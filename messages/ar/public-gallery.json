@@ -1,0 +1,7 @@
+{
+  "PublicGallery": {
+    "eyebrow": "لماذا تختارنا",
+    "heading": "استكشف أعمالنا وأسلوبنا",
+    "portfolio": "المعرض // {count, plural, one {صورة واحدة} two {صورتان} few {# صور} many {# صورة} other {# صورة}}"
+  }
+}

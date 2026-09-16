@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { StaffReview, StaffServiceOffering, TeamMember } from "@/lib/types";
 import { AvatarPlaceholder } from "@/components/ui/placeholder-image";
 import { formatCurrency } from "@/lib/currency";
@@ -47,10 +48,11 @@ export function StaffProfileModal({
   onClose: () => void;
 }) {
   const [tab, setTab] = useState<Tab>("profile");
+  const t = useTranslations("PublicTeam");
 
   const appointmentsCompleted = seededInt(member.id, 800, 6000);
   const clientsServed = seededInt(member.id, 200, 1800);
-  const languages = ["English", "Arabic"];
+  const languages = [t("languageEnglish"), t("languageArabic")];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -61,8 +63,8 @@ export function StaffProfileModal({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
-            className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 hover:text-gray-900"
+            aria-label={t("close")}
+            className="absolute top-4 end-4 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 hover:text-gray-900"
           >
             ✕
           </button>
@@ -90,38 +92,44 @@ export function StaffProfileModal({
                 ({member.reviewCount})
               </>
             ) : (
-              "No reviews yet"
+              t("noReviewsYet")
             )}
           </p>
-          <p className="mt-1 text-center text-sm text-gray-400">Dubai</p>
+          <p className="mt-1 text-center text-sm text-gray-400">
+            {t("location")}
+          </p>
         </div>
 
         <div className="flex items-center justify-center gap-2 border-b border-gray-200 px-4 py-3">
           {(
             [
-              { key: "profile", label: "Profile" },
-              { key: "services", label: "Services" },
-              { key: "reviews", label: "Reviews", count: member.reviewCount },
+              { key: "profile", label: t("profileTab") },
+              { key: "services", label: t("servicesTab") },
+              {
+                key: "reviews",
+                label: t("reviewsTab"),
+                count: member.reviewCount,
+              },
             ] as const
-          ).map((t) => (
+          ).map((tabConfig) => (
             <button
-              key={t.key}
+              key={tabConfig.key}
               type="button"
-              onClick={() => setTab(t.key)}
+              onClick={() => setTab(tabConfig.key)}
               className={`flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                tab === t.key
+                tab === tabConfig.key
                   ? "bg-black text-white"
                   : "border border-gray-300 text-gray-700 hover:bg-gray-100"
               }`}
             >
-              {t.label}
-              {"count" in t && (
+              {tabConfig.label}
+              {"count" in tabConfig && (
                 <span
                   className={`rounded-full px-1.5 text-xs ${
-                    tab === t.key ? "bg-white/20" : "bg-gray-100"
+                    tab === tabConfig.key ? "bg-white/20" : "bg-gray-100"
                   }`}
                 >
-                  {t.count}
+                  {tabConfig.count}
                 </span>
               )}
             </button>
@@ -134,7 +142,7 @@ export function StaffProfileModal({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-gray-900">
-                    Appointments completed
+                    {t("appointmentsCompleted")}
                   </span>
                   <span className="tabular-nums text-gray-500">
                     {appointmentsCompleted.toLocaleString()}
@@ -142,7 +150,7 @@ export function StaffProfileModal({
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-gray-900">
-                    Clients served
+                    {t("clientsServed")}
                   </span>
                   <span className="tabular-nums text-gray-500">
                     {clientsServed.toLocaleString()}
@@ -151,7 +159,7 @@ export function StaffProfileModal({
               </div>
 
               <div>
-                <p className="font-bold text-gray-900">Languages</p>
+                <p className="font-bold text-gray-900">{t("languages")}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {languages.map((lang) => (
                     <span
@@ -170,7 +178,7 @@ export function StaffProfileModal({
             <div className="space-y-1">
               {offerings.length === 0 ? (
                 <p className="text-sm text-gray-500">
-                  No services listed yet.
+                  {t("noServicesListed")}
                 </p>
               ) : (
                 offerings.map((offering) => (
@@ -193,7 +201,7 @@ export function StaffProfileModal({
           {tab === "reviews" && (
             <div className="space-y-4">
               {reviews.length === 0 ? (
-                <p className="text-sm text-gray-500">No reviews yet.</p>
+                <p className="text-sm text-gray-500">{t("noReviewsYet")}</p>
               ) : (
                 reviews.map((review) => (
                   <div
@@ -224,7 +232,7 @@ export function StaffProfileModal({
             onClick={onClose}
             className="block w-full rounded-full bg-black py-3.5 text-center font-semibold text-white transition-opacity hover:opacity-90"
           >
-            Book now
+            {t("bookNowButton")}
           </a>
         </div>
       </div>

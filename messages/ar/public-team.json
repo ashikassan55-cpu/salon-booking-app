@@ -1,0 +1,25 @@
+{
+  "PublicTeam": {
+    "eyebrow": "تعرف على فريقنا",
+    "heading": "أيادٍ ماهرة في كل موعد",
+    "stats": {
+      "yearsExperience": "سنوات الخبرة",
+      "awardsWon": "الجوائز المحققة",
+      "servicesOffered": "الخدمات المقدمة",
+      "happyClients": "عملاء سعداء / شهرياً"
+    },
+    "noReviewsYet": "لا توجد تقييمات بعد",
+    "location": "دبي",
+    "profileTab": "الملف الشخصي",
+    "servicesTab": "الخدمات",
+    "reviewsTab": "التقييمات",
+    "appointmentsCompleted": "المواعيد المكتملة",
+    "clientsServed": "العملاء الذين تم خدمتهم",
+    "languages": "اللغات",
+    "languageEnglish": "الإنجليزية",
+    "languageArabic": "العربية",
+    "noServicesListed": "لا توجد خدمات مدرجة بعد.",
+    "bookNowButton": "احجز الآن",
+    "close": "إغلاق"
+  }
+}

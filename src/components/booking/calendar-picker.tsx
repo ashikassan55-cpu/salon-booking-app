@@ -1,19 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import {
-  WEEKDAY_LABELS,
   getMonthMatrix,
   isDayOpen,
   isPastDay,
   isSameDay,
 } from "@/lib/calendar";
 import type { WorkingHourEntry } from "@/lib/settings";
-
-const MONTH_LABEL = new Intl.DateTimeFormat("en-US", {
-  month: "long",
-  year: "numeric",
-});
 
 type CalendarPickerProps = {
   selectedDate: Date | null;
@@ -30,6 +25,19 @@ export function CalendarPicker({
   const [visibleMonth, setVisibleMonth] = useState(
     () => new Date(today.getFullYear(), today.getMonth(), 1),
   );
+  const locale = useLocale();
+  const t = useTranslations("PublicBooking");
+  const monthLabel = useMemo(
+    () => new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }),
+    [locale],
+  );
+  const weekdayLabels = useMemo(() => {
+    const formatter = new Intl.DateTimeFormat(locale, { weekday: "short" });
+    // 2024-01-07 is a Sunday — a fixed reference week to read weekday names from.
+    return Array.from({ length: 7 }, (_, i) =>
+      formatter.format(new Date(2024, 0, 7 + i)),
+    );
+  }, [locale]);
 
   const weeks = useMemo(
     () => getMonthMatrix(visibleMonth.getFullYear(), visibleMonth.getMonth()),
@@ -51,13 +59,13 @@ export function CalendarPicker({
               (m) => new Date(m.getFullYear(), m.getMonth() - 1, 1),
             )
           }
-          className="h-8 w-8 border border-border-dark text-sm disabled:opacity-30"
-          aria-label="Previous month"
+          className="h-8 w-8 border border-border-dark text-sm rtl:-scale-x-100 disabled:opacity-30"
+          aria-label={t("previousMonth")}
         >
           ←
         </button>
         <p className="text-sm font-semibold tracking-wide uppercase">
-          {MONTH_LABEL.format(visibleMonth)}
+          {monthLabel.format(visibleMonth)}
         </p>
         <button
           type="button"
@@ -66,16 +74,16 @@ export function CalendarPicker({
               (m) => new Date(m.getFullYear(), m.getMonth() + 1, 1),
             )
           }
-          className="h-8 w-8 border border-border-dark text-sm"
-          aria-label="Next month"
+          className="h-8 w-8 border border-border-dark text-sm rtl:-scale-x-100"
+          aria-label={t("nextMonth")}
         >
           →
         </button>
       </div>
 
       <div className="grid grid-cols-7 gap-1 text-center text-xs text-muted-dark">
-        {WEEKDAY_LABELS.map((label) => (
-          <div key={label} className="py-1">
+        {weekdayLabels.map((label, i) => (
+          <div key={i} className="py-1">
             {label}
           </div>
         ))}

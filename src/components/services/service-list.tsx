@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { Service } from "@/lib/types";
 import { ServiceRow } from "./service-row";
 
@@ -6,13 +7,11 @@ function splitInHalf<T>(items: T[]): [T[], T[]] {
   return [items.slice(0, mid), items.slice(mid)];
 }
 
-export function ServiceList({ services }: { services: Service[] }) {
+export async function ServiceList({ services }: { services: Service[] }) {
+  const t = await getTranslations("PublicServices");
+
   if (services.length === 0) {
-    return (
-      <p className="text-sm text-muted-dark">
-        Services will appear here once they&apos;re added.
-      </p>
-    );
+    return <p className="text-sm text-muted-dark">{t("empty")}</p>;
   }
 
   const [left, right] = splitInHalf(services);

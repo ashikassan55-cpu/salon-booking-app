@@ -1,5 +1,6 @@
+import { getTranslations } from "next-intl/server";
 import type { Service, StaffReview, TeamMember } from "@/lib/types";
-import { teamStats } from "@/lib/mock-team";
+import { teamStatValues } from "@/lib/mock-team";
 import { TeamGrid } from "./team-carousel";
 
 type StaffServicePricing = {
@@ -8,7 +9,14 @@ type StaffServicePricing = {
   custom_price: number | null;
 };
 
-export function TeamSection({
+const STAT_KEYS = [
+  "yearsExperience",
+  "awardsWon",
+  "servicesOffered",
+  "happyClients",
+] as const;
+
+export async function TeamSection({
   members,
   services,
   staffServices,
@@ -19,14 +27,16 @@ export function TeamSection({
   staffServices: StaffServicePricing[];
   reviews: StaffReview[];
 }) {
+  const t = await getTranslations("PublicTeam");
+
   return (
     <section className="bg-background px-6 py-16 text-foreground">
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
-          Explore our team
+          {t("eyebrow")}
         </p>
         <h2 className="mt-3 max-w-2xl text-2xl font-bold tracking-tight uppercase sm:text-3xl">
-          Skilled hands behind every appointment
+          {t("heading")}
         </h2>
 
         <div className="mt-10">
@@ -39,11 +49,13 @@ export function TeamSection({
         </div>
 
         <dl className="mt-10 grid grid-cols-2 gap-8 border-t border-border pt-8 sm:grid-cols-4">
-          {teamStats.map((stat) => (
-            <div key={stat.label}>
-              <dt className="sr-only">{stat.label}</dt>
-              <dd className="text-3xl font-bold">{stat.value}</dd>
-              <p className="mt-1 text-xs text-muted uppercase">{stat.label}</p>
+          {STAT_KEYS.map((key) => (
+            <div key={key}>
+              <dt className="sr-only">{t(`stats.${key}`)}</dt>
+              <dd className="text-3xl font-bold">{teamStatValues[key]}</dd>
+              <p className="mt-1 text-xs text-muted uppercase">
+                {t(`stats.${key}`)}
+              </p>
             </div>
           ))}
         </dl>

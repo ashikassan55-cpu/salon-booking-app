@@ -17,15 +17,40 @@ function isSupportedLocale(value: string | undefined): value is AppLocale {
  * (see PLAN.md / the i18n rollout phases for the full namespace list).
  */
 async function loadMessages(locale: AppLocale) {
-  const [publicHeader, publicFooter, adminShell] = await Promise.all([
+  const [
+    publicHeader,
+    publicFooter,
+    publicHero,
+    publicServices,
+    publicGallery,
+    publicTeam,
+    publicTestimonials,
+    publicBooking,
+    publicReview,
+    adminShell,
+  ] = await Promise.all([
     import(`../../messages/${locale}/public-header.json`),
     import(`../../messages/${locale}/public-footer.json`),
+    import(`../../messages/${locale}/public-hero.json`),
+    import(`../../messages/${locale}/public-services.json`),
+    import(`../../messages/${locale}/public-gallery.json`),
+    import(`../../messages/${locale}/public-team.json`),
+    import(`../../messages/${locale}/public-testimonials.json`),
+    import(`../../messages/${locale}/public-booking.json`),
+    import(`../../messages/${locale}/public-review.json`),
     import(`../../messages/${locale}/admin-shell.json`),
   ]);
 
   return {
     ...publicHeader.default,
     ...publicFooter.default,
+    ...publicHero.default,
+    ...publicServices.default,
+    ...publicGallery.default,
+    ...publicTeam.default,
+    ...publicTestimonials.default,
+    ...publicBooking.default,
+    ...publicReview.default,
     ...adminShell.default,
   };
 }

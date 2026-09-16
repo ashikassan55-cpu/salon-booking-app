@@ -1,0 +1,10 @@
+{
+  "PublicServices": {
+    "eyebrow": "اختر الأفضل",
+    "heading": "استكشف خدماتنا",
+    "empty": "ستظهر الخدمات هنا بمجرد إضافتها.",
+    "durationMinutes": "{minutes} دقيقة",
+    "durationHours": "{hours} ساعة",
+    "durationHoursMinutes": "{hours} ساعة و{minutes} دقيقة"
+  }
+}

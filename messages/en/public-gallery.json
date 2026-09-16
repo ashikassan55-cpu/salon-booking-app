@@ -1,0 +1,7 @@
+{
+  "PublicGallery": {
+    "eyebrow": "Why choose us",
+    "heading": "Explore our work & process",
+    "portfolio": "Portfolio // {count, plural, one {# photo} other {# photos}}"
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Testimonial } from "@/lib/types";
 import { AvatarPlaceholder } from "@/components/ui/placeholder-image";
 
@@ -10,6 +11,7 @@ export function TestimonialSlider({
   testimonials: Testimonial[];
 }) {
   const [index, setIndex] = useState(0);
+  const t = useTranslations("PublicTestimonials");
   const current = testimonials[index];
 
   if (!current) return null;
@@ -37,7 +39,7 @@ export function TestimonialSlider({
           <button
             key={testimonial.id}
             type="button"
-            aria-label={`Show testimonial ${i + 1}`}
+            aria-label={t("showTestimonial", { number: i + 1 })}
             aria-current={i === index}
             onClick={() => setIndex(i)}
             className={`h-2 w-2 rounded-full transition-colors ${

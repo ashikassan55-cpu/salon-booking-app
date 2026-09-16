@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { toDateInputValue } from "@/lib/calendar";
 import { getAvailableSlots } from "./actions";
 
@@ -21,6 +22,7 @@ export function TimeSlotPicker({
 }: TimeSlotPickerProps) {
   const [slots, setSlots] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("PublicBooking");
 
   useEffect(() => {
     if (!selectedDate || !serviceId || !staffId) {
@@ -45,23 +47,15 @@ export function TimeSlotPicker({
   }, [serviceId, staffId, selectedDate]);
 
   if (!selectedDate) {
-    return (
-      <p className="text-sm text-muted-dark">
-        Pick a date to see available times.
-      </p>
-    );
+    return <p className="text-sm text-muted-dark">{t("pickDateForTimes")}</p>;
   }
 
   if (loading) {
-    return <p className="text-sm text-muted-dark">Loading available times…</p>;
+    return <p className="text-sm text-muted-dark">{t("loadingTimes")}</p>;
   }
 
   if (slots.length === 0) {
-    return (
-      <p className="text-sm text-muted-dark">
-        No time slots left on this day — try another date.
-      </p>
-    );
+    return <p className="text-sm text-muted-dark">{t("noTimesLeft")}</p>;
   }
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { BookingStylist, Service } from "@/lib/types";
 import type { WorkingHourEntry } from "@/lib/settings";
 import { toDateInputValue } from "@/lib/calendar";
@@ -38,6 +39,7 @@ export function BookingForm({
     submitBooking,
     initialState,
   );
+  const t = useTranslations("PublicBooking");
 
   const [serviceId, setServiceId] = useState("");
   const [staffId, setStaffId] = useState("");
@@ -123,7 +125,7 @@ export function BookingForm({
       <div className="space-y-6">
         <div>
           <label htmlFor="customerName" className="text-sm font-medium">
-            Your Name
+            {t("yourName")}
           </label>
           <input
             id="customerName"
@@ -135,7 +137,7 @@ export function BookingForm({
 
         <div>
           <label htmlFor="customerPhone" className="text-sm font-medium">
-            Your Phone
+            {t("yourPhone")}
           </label>
           <input
             id="customerPhone"
@@ -148,7 +150,7 @@ export function BookingForm({
 
         <div>
           <label htmlFor="serviceId" className="text-sm font-medium">
-            Choose Service
+            {t("chooseService")}
           </label>
           <select
             id="serviceId"
@@ -158,7 +160,7 @@ export function BookingForm({
             className="mt-2 w-full border-b border-border-dark bg-transparent py-2 text-sm outline-none focus:border-foreground-dark"
           >
             <option value="" className="bg-surface-dark">
-              Select a service
+              {t("selectService")}
             </option>
             {services.map((service) => (
               <option
@@ -172,15 +174,15 @@ export function BookingForm({
           </select>
           {selectedService && (
             <p className="mt-2 text-xs text-muted-dark">
-              {selectedService.duration_minutes} min &middot;{" "}
-              {formatCurrency(selectedService.price, false)}
+              {t("durationUnit", { minutes: selectedService.duration_minutes })}{" "}
+              &middot; {formatCurrency(selectedService.price, false)}
             </p>
           )}
         </div>
 
         {selectedService && (
           <div>
-            <p className="text-sm font-medium">Choose Stylist</p>
+            <p className="text-sm font-medium">{t("chooseStylist")}</p>
             <div className="mt-2">
               <StylistPicker
                 stylists={eligibleStylists}
@@ -194,7 +196,7 @@ export function BookingForm({
 
         {staffId && (
           <div>
-            <p className="text-sm font-medium">Choose Time</p>
+            <p className="text-sm font-medium">{t("chooseTime")}</p>
             <div className="mt-2">
               <TimeSlotPicker
                 serviceId={serviceId}
@@ -211,7 +213,7 @@ export function BookingForm({
       <div className="space-y-6">
         {staffId && (
           <>
-            <p className="text-sm font-medium">Choose Date</p>
+            <p className="text-sm font-medium">{t("chooseDate")}</p>
             <CalendarPicker
               selectedDate={selectedDate}
               onSelectDate={handleSelectDate}
@@ -231,7 +233,7 @@ export function BookingForm({
           disabled={pending}
           className="w-full bg-accent px-6 py-3 text-xs font-semibold tracking-wide text-accent-foreground uppercase transition-opacity hover:opacity-90 disabled:opacity-50"
         >
-          {pending ? "Booking..." : "Book an Appointment"}
+          {pending ? t("booking") : t("bookAppointment")}
         </button>
       </div>
     </form>

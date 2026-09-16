@@ -8,7 +8,6 @@ import { TeamSection } from "@/components/team/team-section";
 import { TestimonialSection } from "@/components/testimonials/testimonial-section";
 import { createClient } from "@/lib/supabase/server";
 import { getSiteSettings } from "@/lib/settings";
-import { mockTestimonials } from "@/lib/mock-testimonials";
 import type { BookingStylist, HeroSlide, StaffReview, TeamMember } from "@/lib/types";
 import type { WorkingHourEntry } from "@/lib/settings";
 
@@ -113,7 +112,7 @@ export default async function Home() {
           staffServices={staffServices ?? []}
           reviews={reviews}
         />
-        <TestimonialSection testimonials={mockTestimonials} />
+        <TestimonialSection />
         <ServicesSection services={services ?? []} />
         <BookingSection
           services={services ?? []}

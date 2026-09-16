@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { siteConfig } from "@/lib/site-config";
+import { useTranslations } from "next-intl";
 import type { HeroSlide } from "@/lib/types";
 
 const AUTOPLAY_MS = 6000;
@@ -17,6 +17,8 @@ export function Hero({
   slides: HeroSlide[];
 }) {
   const [index, setIndex] = useState(0);
+  const t = useTranslations("PublicHero");
+  const tHeader = useTranslations("PublicHeader");
 
   useEffect(() => {
     if (slides.length <= 1) return;
@@ -59,7 +61,7 @@ export function Hero({
       <div className="absolute inset-0 flex items-center">
         <div className="mx-auto w-full max-w-6xl px-6">
           <p className="text-xs font-semibold tracking-[0.2em] text-muted-dark uppercase">
-            Welcome to
+            {t("welcomeTo")}
           </p>
           <h1 className="mt-4 max-w-2xl text-5xl font-bold tracking-tight uppercase sm:text-6xl">
             {siteName}
@@ -71,7 +73,7 @@ export function Hero({
             href="#booking"
             className="mt-10 inline-block bg-accent px-6 py-3 text-xs font-semibold tracking-wide text-accent-foreground uppercase transition-opacity hover:opacity-90"
           >
-            {siteConfig.bookingCta}
+            {tHeader("bookNow")}
           </Link>
 
           {slides.length > 1 && (
@@ -80,7 +82,7 @@ export function Hero({
                 <button
                   key={slide.id}
                   type="button"
-                  aria-label={`Show slide ${i + 1}`}
+                  aria-label={t("showSlide", { number: i + 1 })}
                   aria-current={i === index}
                   onClick={() => setIndex(i)}
                   className={`h-2 w-2 rounded-full transition-colors ${

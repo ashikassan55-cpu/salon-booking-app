@@ -1,0 +1,40 @@
+{
+  "PublicBooking": {
+    "eyebrow": "احجز موعدك",
+    "heading": "اختر خدمتك المثالية",
+    "yourName": "اسمك",
+    "yourPhone": "رقم هاتفك",
+    "chooseService": "اختر الخدمة",
+    "selectService": "اختر خدمة",
+    "durationUnit": "{minutes} دقيقة",
+    "chooseStylist": "اختر المصفف",
+    "anyProfessional": "أي متخصص",
+    "maxAvailability": "أقصى توفر",
+    "fromPrice": "ابتداءً من {price}",
+    "chooseTime": "اختر الوقت",
+    "pickDateForTimes": "اختر تاريخاً لعرض الأوقات المتاحة.",
+    "loadingTimes": "جارٍ تحميل الأوقات المتاحة…",
+    "noTimesLeft": "لا توجد أوقات متبقية في هذا اليوم — جرّب تاريخاً آخر.",
+    "chooseDate": "اختر التاريخ",
+    "previousMonth": "الشهر السابق",
+    "nextMonth": "الشهر التالي",
+    "booking": "جارٍ الحجز...",
+    "bookAppointment": "احجز موعداً",
+    "checkForm": "يرجى مراجعة النموذج",
+    "serviceUnavailable": "هذه الخدمة لم تعد متاحة — يرجى اختيار خدمة أخرى.",
+    "noStylistForService": "لا يوجد حالياً متخصص يقدّم هذه الخدمة — يرجى اختيار خدمة أخرى.",
+    "slotTaken": "تم للتو حجز هذا الوقت — يرجى اختيار وقت آخر.",
+    "stylistUnavailable": "هذا المتخصص لم يعد متاحاً — يرجى اختيار آخر.",
+    "submissionError": "حدث خطأ ما أثناء إرسال حجزك — يرجى المحاولة مرة أخرى.",
+    "whatsapp": {
+      "title": "*طلب حجز جديد!* ✂️",
+      "name": "الاسم:",
+      "phone": "الهاتف:",
+      "service": "الخدمة:",
+      "stylist": "المتخصص:",
+      "date": "التاريخ:",
+      "at": "الساعة",
+      "confirm": "يرجى تأكيد هذا الموعد."
+    }
+  }
+}

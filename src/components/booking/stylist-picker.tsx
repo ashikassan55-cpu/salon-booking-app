@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { AvatarPlaceholder } from "@/components/ui/placeholder-image";
 import { formatCurrency } from "@/lib/currency";
 
@@ -26,12 +27,13 @@ export function StylistPicker({
   selectedStaffId: string;
   onSelect: (staffId: string) => void;
 }) {
+  const t = useTranslations("PublicBooking");
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       <button
         type="button"
         onClick={() => onSelect(ANY_PROFESSIONAL)}
-        className={`flex items-center gap-3 border p-3 text-left transition-colors ${
+        className={`flex items-center gap-3 border p-3 text-start transition-colors ${
           selectedStaffId === ANY_PROFESSIONAL
             ? "border-foreground-dark bg-foreground-dark/10"
             : "border-border-dark hover:bg-foreground-dark/5"
@@ -41,11 +43,13 @@ export function StylistPicker({
           ✨
         </div>
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold">Any Professional</p>
+          <p className="truncate text-sm font-semibold">
+            {t("anyProfessional")}
+          </p>
           <p className="truncate text-xs text-muted-dark">
-            Maximum availability
+            {t("maxAvailability")}
             {cheapestPrice !== null
-              ? ` · from ${formatCurrency(cheapestPrice, false)}`
+              ? ` · ${t("fromPrice", { price: formatCurrency(cheapestPrice, false) })}`
               : ""}
           </p>
         </div>
@@ -56,7 +60,7 @@ export function StylistPicker({
           key={stylist.id}
           type="button"
           onClick={() => onSelect(stylist.id)}
-          className={`flex items-center gap-3 border p-3 text-left transition-colors ${
+          className={`flex items-center gap-3 border p-3 text-start transition-colors ${
             selectedStaffId === stylist.id
               ? "border-foreground-dark bg-foreground-dark/10"
               : "border-border-dark hover:bg-foreground-dark/5"

@@ -1,0 +1,25 @@
+{
+  "PublicReview": {
+    "linkNotFound": "رابط التقييم غير موجود",
+    "linkNotFoundHint": "قد يكون هذا الرابط منتهي الصلاحية أو تم كتابته بشكل غير صحيح.",
+    "alreadySubmitted": "شكراً لك، لقد قمت بالفعل بإرسال تقييمك لهذه الزيارة.",
+    "notCompleted": "لم يتم إكمال هذا الحجز بعد.",
+    "notCompletedHint": "يرجى المراجعة بعد موعدك لترك تقييم.",
+    "defaultStylistName": "المتخصص لديك",
+    "rateVisitWith": "قيّم زيارتك مع {stylistName}",
+    "commentsOptional": "تعليقات (اختياري)",
+    "starLabel": "{count, plural, one {# نجمة} two {نجمتان} few {# نجوم} many {# نجمة} other {# نجمة}}",
+    "submitting": "جارٍ الإرسال…",
+    "submitReview": "إرسال التقييم",
+    "thankYou": "شكراً لك على ملاحظاتك!",
+    "shareOnGoogle": "شارك هذا على تقييمات جوجل",
+    "errors": {
+      "notFound": "رابط التقييم هذا غير صالح.",
+      "notCompleted": "لم يتم تحديد هذا الحجز على أنه مكتمل بعد.",
+      "alreadyReviewed": "لقد قمت بالفعل بإرسال تقييم لهذه الزيارة.",
+      "noStylist": "لا يوجد متخصص مسجل لهذا الحجز — يرجى التواصل مع الصالون مباشرة.",
+      "checkRating": "يرجى مراجعة تقييمك",
+      "generic": "حدث خطأ ما أثناء إرسال تقييمك — يرجى المحاولة مرة أخرى."
+    }
+  }
+}

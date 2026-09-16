@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { useTranslations } from "next-intl";
 import { submitReview, type ReviewFormState } from "@/app/rate/[token]/actions";
 
 const initialState: ReviewFormState = { error: null, success: false };
@@ -19,11 +20,12 @@ export function ReviewForm({
   const [state, formAction, pending] = useActionState(submitReview, initialState);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const t = useTranslations("PublicReview");
 
   if (state.success) {
     return (
       <div className="text-center">
-        <p className="text-lg font-semibold">Thank you for your feedback!</p>
+        <p className="text-lg font-semibold">{t("thankYou")}</p>
         {rating >= 4 && googleReviewUrl && (
           <a
             href={googleReviewUrl}
@@ -31,7 +33,7 @@ export function ReviewForm({
             rel="noopener noreferrer"
             className="mt-4 inline-block bg-accent px-5 py-2.5 text-xs font-semibold tracking-wide text-accent-foreground uppercase transition-opacity hover:opacity-90"
           >
-            Share this on Google Reviews
+            {t("shareOnGoogle")}
           </a>
         )}
       </div>
@@ -45,7 +47,7 @@ export function ReviewForm({
 
       <div>
         <p className="text-lg font-semibold">
-          Rate your visit with {stylistName}
+          {t("rateVisitWith", { stylistName })}
         </p>
         <p className="mt-1 text-sm text-muted-dark">{serviceName}</p>
       </div>
@@ -58,7 +60,7 @@ export function ReviewForm({
             onClick={() => setRating(star)}
             onMouseEnter={() => setHoverRating(star)}
             onMouseLeave={() => setHoverRating(0)}
-            aria-label={`${star} star${star === 1 ? "" : "s"}`}
+            aria-label={t("starLabel", { count: star })}
             className="p-1 text-3xl transition-colors"
           >
             <span
@@ -74,9 +76,9 @@ export function ReviewForm({
         ))}
       </div>
 
-      <div className="text-left">
+      <div className="text-start">
         <label htmlFor="comment" className="text-sm font-medium">
-          Comments (optional)
+          {t("commentsOptional")}
         </label>
         <textarea
           id="comment"
@@ -97,7 +99,7 @@ export function ReviewForm({
         disabled={pending || rating === 0}
         className="w-full bg-accent px-6 py-3 text-xs font-semibold tracking-wide text-accent-foreground uppercase transition-opacity hover:opacity-90 disabled:opacity-50"
       >
-        {pending ? "Submitting…" : "Submit Review"}
+        {pending ? t("submitting") : t("submitReview")}
       </button>
     </form>
   );

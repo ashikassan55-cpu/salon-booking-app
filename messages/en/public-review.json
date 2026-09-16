@@ -1,0 +1,25 @@
+{
+  "PublicReview": {
+    "linkNotFound": "Review link not found",
+    "linkNotFoundHint": "This link may have expired or been mistyped.",
+    "alreadySubmitted": "Thank you, you have already submitted your review for this visit.",
+    "notCompleted": "This booking hasn't been completed yet.",
+    "notCompletedHint": "Check back after your appointment to leave a review.",
+    "defaultStylistName": "your stylist",
+    "rateVisitWith": "Rate your visit with {stylistName}",
+    "commentsOptional": "Comments (optional)",
+    "starLabel": "{count, plural, one {# star} other {# stars}}",
+    "submitting": "Submitting…",
+    "submitReview": "Submit Review",
+    "thankYou": "Thank you for your feedback!",
+    "shareOnGoogle": "Share this on Google Reviews",
+    "errors": {
+      "notFound": "This review link isn't valid.",
+      "notCompleted": "This booking hasn't been marked completed yet.",
+      "alreadyReviewed": "You've already submitted a review for this visit.",
+      "noStylist": "This booking has no stylist on record — please contact the salon directly.",
+      "checkRating": "Please check your rating",
+      "generic": "Something went wrong submitting your review — please try again."
+    }
+  }
+}

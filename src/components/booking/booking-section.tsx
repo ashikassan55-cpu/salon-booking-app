@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { BookingStylist, Service } from "@/lib/types";
 import type { WorkingHourEntry } from "@/lib/settings";
 import { BookingForm } from "./booking-form";
@@ -8,7 +9,7 @@ type StaffServicePricing = {
   custom_price: number | null;
 };
 
-export function BookingSection({
+export async function BookingSection({
   services,
   staff,
   staffServices,
@@ -19,6 +20,7 @@ export function BookingSection({
   staffServices: StaffServicePricing[];
   workingHours: WorkingHourEntry[];
 }) {
+  const t = await getTranslations("PublicBooking");
   return (
     <section
       id="booking"
@@ -26,10 +28,10 @@ export function BookingSection({
     >
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold tracking-[0.2em] text-muted-dark uppercase">
-          Reserve your spot
+          {t("eyebrow")}
         </p>
         <h2 className="mt-3 max-w-2xl text-2xl font-bold tracking-tight uppercase sm:text-3xl">
-          Choose your perfect service
+          {t("heading")}
         </h2>
 
         <div className="mt-14">

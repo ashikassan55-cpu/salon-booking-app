@@ -1,9 +1,5 @@
 import type { WorkingHourEntry } from "@/lib/settings";
 
-const WEEKDAY_LABELS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-
-export { WEEKDAY_LABELS };
-
 function hoursForDay(workingHours: WorkingHourEntry[], date: Date) {
   return workingHours.find((h) => h.weekday === date.getDay());
 }

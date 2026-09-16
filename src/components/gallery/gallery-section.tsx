@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { GalleryItem } from "@/lib/types";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 
@@ -15,7 +16,7 @@ function GalleryTile({ item }: { item: GalleryItem }) {
         <PlaceholderImage className="aspect-square w-full" />
       )}
       {item.caption && (
-        <span className="absolute bottom-3 left-3 bg-black/70 px-2.5 py-1 text-[11px] font-semibold tracking-wider text-white uppercase">
+        <span className="absolute bottom-3 start-3 bg-black/70 px-2.5 py-1 text-[11px] font-semibold tracking-wider text-white uppercase">
           {item.caption}
         </span>
       )}
@@ -62,8 +63,10 @@ function GalleryColumns({
   );
 }
 
-export function GallerySection({ items }: { items: GalleryItem[] }) {
+export async function GallerySection({ items }: { items: GalleryItem[] }) {
   if (items.length === 0) return null;
+
+  const t = await getTranslations("PublicGallery");
 
   return (
     // Deliberately full-bleed (no max-w-6xl centering, unlike every other
@@ -77,14 +80,14 @@ export function GallerySection({ items }: { items: GalleryItem[] }) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
-            Why choose us
+            {t("eyebrow")}
           </p>
           <h2 className="mt-3 text-2xl font-bold tracking-tight uppercase sm:text-3xl">
-            Explore our work & process
+            {t("heading")}
           </h2>
         </div>
         <p className="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
-          Portfolio // {items.length} photo{items.length === 1 ? "" : "s"}
+          {t("portfolio", { count: items.length })}
         </p>
       </div>
 

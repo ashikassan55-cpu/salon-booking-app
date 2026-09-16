@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { getSiteSettings } from "@/lib/settings";
 import { ReviewForm } from "@/components/review/review-form";
@@ -18,6 +19,7 @@ export default async function RatePage({
   const { token } = await params;
   const supabase = await createClient();
   const settings = await getSiteSettings();
+  const t = await getTranslations("PublicReview");
 
   const { data, error } = await supabase.rpc("get_booking_for_review", {
     p_token: token,
@@ -27,10 +29,8 @@ export default async function RatePage({
   if (error || !booking) {
     return (
       <StatusScreen>
-        <p className="text-lg font-semibold">Review link not found</p>
-        <p className="mt-2 text-sm text-muted-dark">
-          This link may have expired or been mistyped.
-        </p>
+        <p className="text-lg font-semibold">{t("linkNotFound")}</p>
+        <p className="mt-2 text-sm text-muted-dark">{t("linkNotFoundHint")}</p>
       </StatusScreen>
     );
   }
@@ -38,9 +38,7 @@ export default async function RatePage({
   if (booking.reviewed_at) {
     return (
       <StatusScreen>
-        <p className="text-lg font-semibold">
-          Thank you, you have already submitted your review for this visit.
-        </p>
+        <p className="text-lg font-semibold">{t("alreadySubmitted")}</p>
       </StatusScreen>
     );
   }
@@ -48,12 +46,8 @@ export default async function RatePage({
   if (booking.status !== "completed") {
     return (
       <StatusScreen>
-        <p className="text-lg font-semibold">
-          This booking hasn&apos;t been completed yet.
-        </p>
-        <p className="mt-2 text-sm text-muted-dark">
-          Check back after your appointment to leave a review.
-        </p>
+        <p className="text-lg font-semibold">{t("notCompleted")}</p>
+        <p className="mt-2 text-sm text-muted-dark">{t("notCompletedHint")}</p>
       </StatusScreen>
     );
   }
@@ -62,7 +56,7 @@ export default async function RatePage({
     <StatusScreen>
       <ReviewForm
         token={token}
-        stylistName={booking.staff_name ?? "your stylist"}
+        stylistName={booking.staff_name ?? t("defaultStylistName")}
         serviceName={booking.service_name}
         googleReviewUrl={settings.googleReviewUrl}
       />

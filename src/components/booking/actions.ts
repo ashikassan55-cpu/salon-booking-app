@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { getSiteSettings } from "@/lib/settings";
 import { formatInSalonTimezone, salonDayRangeUtc, salonLocalToUtcDate } from "@/lib/timezone";
@@ -162,8 +163,10 @@ export async function submitBooking(
     time: timeStr,
   });
 
+  const t = await getTranslations("PublicBooking");
+
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Please check the form" };
+    return { error: result.error.issues[0]?.message ?? t("checkForm") };
   }
 
   const supabase = await createClient();
@@ -175,7 +178,7 @@ export async function submitBooking(
     .single();
 
   if (serviceError || !service) {
-    return { error: "That service is no longer available — please choose another." };
+    return { error: t("serviceUnavailable") };
   }
 
   const eligible = await getEligibleStylists(supabase, service.id);
@@ -187,7 +190,7 @@ export async function submitBooking(
 
   if (result.data.staffId === ANY_PROFESSIONAL) {
     if (eligible.length === 0) {
-      return { error: "No stylist currently offers that service — please choose another." };
+      return { error: t("noStylistForService") };
     }
 
     const existingBookings = await getExistingBookingsForDay(
@@ -209,7 +212,7 @@ export async function submitBooking(
       });
 
     if (free.length === 0) {
-      return { error: "That time was just taken — please pick another." };
+      return { error: t("slotTaken") };
     }
 
     resolvedStaffId = free[0].staffId;
@@ -218,7 +221,7 @@ export async function submitBooking(
   } else {
     const stylist = eligible.find((s) => s.staffId === result.data.staffId);
     if (!stylist) {
-      return { error: "That stylist is no longer available — please choose another." };
+      return { error: t("stylistUnavailable") };
     }
 
     const existingBookings = await getExistingBookingsForDay(
@@ -235,7 +238,7 @@ export async function submitBooking(
         existingBookings,
       )
     ) {
-      return { error: "That time was just taken — please pick another." };
+      return { error: t("slotTaken") };
     }
 
     resolvedStaffId = stylist.staffId;
@@ -256,21 +259,26 @@ export async function submitBooking(
   });
 
   if (insertError) {
-    return { error: "Something went wrong submitting your booking — please try again." };
+    return { error: t("submissionError") };
   }
 
-  const formattedDate = formatInSalonTimezone(result.data.date, {
-    dateStyle: "medium",
-  });
-  const formattedTime = formatInSalonTimezone(result.data.date, {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+  const locale = await getLocale();
+  const dateLocale = locale === "ar" ? "ar-AE" : "en-US";
+
+  const formattedDate = formatInSalonTimezone(
+    result.data.date,
+    { dateStyle: "medium" },
+    dateLocale,
+  );
+  const formattedTime = formatInSalonTimezone(
+    result.data.date,
+    { hour: "2-digit", minute: "2-digit", hour12: true },
+    dateLocale,
+  );
 
   const settings = await getSiteSettings();
 
-  const message = `*New Booking Request!* ✂️\nName: ${result.data.customerName}\nPhone: ${result.data.customerPhone}\nService: ${service.name}\nStylist: ${resolvedStaffName}\nDate: ${formattedDate} at ${formattedTime}\n\nPlease confirm this appointment.`;
+  const message = `${t("whatsapp.title")}\n${t("whatsapp.name")} ${result.data.customerName}\n${t("whatsapp.phone")} ${result.data.customerPhone}\n${t("whatsapp.service")} ${service.name}\n${t("whatsapp.stylist")} ${resolvedStaffName}\n${t("whatsapp.date")} ${formattedDate} ${t("whatsapp.at")} ${formattedTime}\n\n${t("whatsapp.confirm")}`;
   const encodedMessage = encodeURIComponent(message);
   const whatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodedMessage}`;
 

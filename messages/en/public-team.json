@@ -1,0 +1,25 @@
+{
+  "PublicTeam": {
+    "eyebrow": "Explore our team",
+    "heading": "Skilled hands behind every appointment",
+    "stats": {
+      "yearsExperience": "Years of Experience",
+      "awardsWon": "Awards Won",
+      "servicesOffered": "Services Offered",
+      "happyClients": "Happy Clients / Month"
+    },
+    "noReviewsYet": "No reviews yet",
+    "location": "Dubai",
+    "profileTab": "Profile",
+    "servicesTab": "Services",
+    "reviewsTab": "Reviews",
+    "appointmentsCompleted": "Appointments completed",
+    "clientsServed": "Clients served",
+    "languages": "Languages",
+    "languageEnglish": "English",
+    "languageArabic": "Arabic",
+    "noServicesListed": "No services listed yet.",
+    "bookNowButton": "Book now",
+    "close": "Close"
+  }
+}

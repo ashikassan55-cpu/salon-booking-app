@@ -24,8 +24,9 @@ export function salonDayRangeUtc(dateStr: string): [Date, Date] {
 export function formatInSalonTimezone(
   date: Date,
   options: Intl.DateTimeFormatOptions,
+  locale: string = "en-US",
 ) {
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(locale, {
     timeZone: siteConfig.timezone,
     ...options,
   }).format(date);
