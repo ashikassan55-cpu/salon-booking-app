@@ -4,14 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Service } from "@/lib/types";
 import { deleteService } from "@/app/admin/(shell)/services/actions";
+import { formatCurrency } from "@/lib/currency";
 import { ServiceDrawer } from "./service-drawer";
 
 function formatPrice(price: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  }).format(price);
+  return formatCurrency(price, false);
 }
 
 type DrawerState =

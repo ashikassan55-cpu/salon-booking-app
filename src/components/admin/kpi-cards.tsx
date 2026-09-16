@@ -1,12 +1,6 @@
 import type { BookingKpis } from "@/lib/admin/analytics";
 import type { BookingStatus } from "@/lib/types";
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(amount);
-}
+import { formatCurrency } from "@/lib/currency";
 
 const STATUS_LABELS: Record<BookingStatus, string> = {
   pending: "Pending",

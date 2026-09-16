@@ -20,7 +20,7 @@ export function TeamSection({
   reviews: StaffReview[];
 }) {
   return (
-    <section className="bg-background px-6 py-24 text-foreground">
+    <section className="bg-background px-6 py-16 text-foreground">
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
           Explore our team
@@ -29,7 +29,7 @@ export function TeamSection({
           Skilled hands behind every appointment
         </h2>
 
-        <div className="mt-14">
+        <div className="mt-10">
           <TeamGrid
             members={members}
             services={services}
@@ -38,7 +38,7 @@ export function TeamSection({
           />
         </div>
 
-        <dl className="mt-16 grid grid-cols-2 gap-8 border-t border-border pt-10 sm:grid-cols-4">
+        <dl className="mt-10 grid grid-cols-2 gap-8 border-t border-border pt-8 sm:grid-cols-4">
           {teamStats.map((stat) => (
             <div key={stat.label}>
               <dt className="sr-only">{stat.label}</dt>

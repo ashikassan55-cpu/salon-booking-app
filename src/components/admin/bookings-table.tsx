@@ -1,6 +1,7 @@
 import type { Booking, BookingStatus } from "@/lib/types";
 import { formatInSalonTimezone } from "@/lib/timezone";
 import { normalizeUaePhoneForWhatsapp } from "@/lib/phone";
+import { formatCurrency } from "@/lib/currency";
 import { BookingStatusActions } from "./booking-status-actions";
 
 const STATUS_OPTIONS: BookingStatus[] = [
@@ -218,7 +219,7 @@ export function BookingsTable({
                     <td className="px-4 py-3 align-top">
                       <p>{booking.service_name_snapshot}</p>
                       <p className="text-xs text-admin-muted tabular-nums">
-                        ${booking.service_price_snapshot}
+                        {formatCurrency(booking.service_price_snapshot, false)}
                       </p>
                     </td>
                     <td className="px-4 py-3 align-top">

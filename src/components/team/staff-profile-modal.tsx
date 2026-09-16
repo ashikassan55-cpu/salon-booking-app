@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { StaffReview, StaffServiceOffering, TeamMember } from "@/lib/types";
 import { AvatarPlaceholder } from "@/components/ui/placeholder-image";
+import { formatCurrency } from "@/lib/currency";
 
 type Tab = "profile" | "services" | "reviews";
 
@@ -181,7 +182,7 @@ export function StaffProfileModal({
                       {offering.name}
                     </span>
                     <span className="tabular-nums text-gray-500">
-                      ${offering.price}
+                      {formatCurrency(offering.price)}
                     </span>
                   </div>
                 ))

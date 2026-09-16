@@ -4,6 +4,7 @@ import { useActionState, useMemo, useState } from "react";
 import type { BookingStylist, Service } from "@/lib/types";
 import type { WorkingHourEntry } from "@/lib/settings";
 import { toDateInputValue } from "@/lib/calendar";
+import { formatCurrency } from "@/lib/currency";
 import { getEffectivePrice, unionWorkingHours } from "@/lib/availability";
 import { submitBooking, type BookingState } from "./actions";
 import { CalendarPicker } from "./calendar-picker";
@@ -171,8 +172,8 @@ export function BookingForm({
           </select>
           {selectedService && (
             <p className="mt-2 text-xs text-muted-dark">
-              {selectedService.duration_minutes} min &middot; $
-              {selectedService.price}
+              {selectedService.duration_minutes} min &middot;{" "}
+              {formatCurrency(selectedService.price, false)}
             </p>
           )}
         </div>

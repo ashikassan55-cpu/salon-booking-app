@@ -1,6 +1,7 @@
 "use client";
 
 import type { Service, StaffServicePricing } from "@/lib/types";
+import { formatCurrency } from "@/lib/currency";
 
 /**
  * Checkbox list of every service; checking one means this stylist performs
@@ -64,11 +65,11 @@ export function ServicePricingPicker({
                 {service.name}
               </span>
               <span className="text-admin-muted">
-                (base ${service.price})
+                (base {formatCurrency(service.price, false)})
               </span>
             </label>
             <div className="flex items-center gap-1">
-              <span className="text-xs text-admin-muted">$</span>
+              <span className="text-xs text-admin-muted">AED</span>
               <input
                 type="number"
                 step="0.01"

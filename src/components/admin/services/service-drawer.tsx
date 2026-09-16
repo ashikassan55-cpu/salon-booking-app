@@ -165,7 +165,7 @@ export function ServiceDrawer({ service, onClose, onSaved }: ServiceDrawerProps)
               </label>
               <div className="flex items-center border border-admin-border focus-within:border-admin-accent">
                 <span className="border-r border-admin-border bg-admin-bg px-3 py-2 text-sm text-admin-muted">
-                  $
+                  AED
                 </span>
                 <input
                   id="price"

@@ -1,11 +1,5 @@
 import type { Service } from "@/lib/types";
-
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
-}
+import { formatCurrency } from "@/lib/currency";
 
 function formatDuration(minutes: number) {
   if (minutes < 60) return `${minutes} min`;
@@ -24,7 +18,7 @@ export function ServiceRow({ service }: { service: Service }) {
         </p>
       </div>
       <p className="shrink-0 text-lg font-semibold text-muted-dark">
-        {formatPrice(service.price)}
+        {formatCurrency(service.price)}
       </p>
     </div>
   );

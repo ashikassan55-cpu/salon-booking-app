@@ -1,6 +1,7 @@
 "use client";
 
 import { AvatarPlaceholder } from "@/components/ui/placeholder-image";
+import { formatCurrency } from "@/lib/currency";
 
 export type EligibleStylist = {
   id: string;
@@ -43,7 +44,9 @@ export function StylistPicker({
           <p className="truncate text-sm font-semibold">Any Professional</p>
           <p className="truncate text-xs text-muted-dark">
             Maximum availability
-            {cheapestPrice !== null ? ` · from $${cheapestPrice}` : ""}
+            {cheapestPrice !== null
+              ? ` · from ${formatCurrency(cheapestPrice, false)}`
+              : ""}
           </p>
         </div>
       </button>
@@ -79,7 +82,7 @@ export function StylistPicker({
               {stylist.reviewCount > 0 && stylist.avgRating !== null
                 ? `★ ${stylist.avgRating.toFixed(1)} · `
                 : ""}
-              ${stylist.price}
+              {formatCurrency(stylist.price, false)}
             </p>
           </div>
         </button>
