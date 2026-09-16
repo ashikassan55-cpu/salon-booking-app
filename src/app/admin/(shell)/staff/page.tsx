@@ -37,6 +37,8 @@ export default async function AdminStaffPage() {
     photoUrl: row.photo_url,
     schedule: (row.schedule as WorkingHourEntry[]) ?? settings.workingHours,
     isActive: row.is_active,
+    bio: row.bio,
+    suiteLabel: row.suite_label,
   }));
 
   const pricingByStaffId: Record<string, StaffServicePricing[]> = {};

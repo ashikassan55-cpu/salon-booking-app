@@ -9,6 +9,8 @@ export function createStaffSchema(t: Translator) {
     name: z.string().trim().min(2, t("staff.nameMin")),
     role: z.string().trim().min(2, t("staff.roleMin")),
     schedule: weeklyScheduleSchema,
+    bio: z.string().trim().max(300, t("staff.bioMax")).optional(),
+    suiteLabel: z.string().trim().max(40, t("staff.suiteLabelMax")).optional(),
   });
 }
 

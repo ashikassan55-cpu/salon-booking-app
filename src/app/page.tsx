@@ -80,6 +80,8 @@ export default async function Home() {
       photoUrl: row.photo_url,
       avgRating: rating?.avg_rating ?? null,
       reviewCount: rating?.review_count ?? 0,
+      bio: row.bio,
+      suiteLabel: row.suite_label,
     };
   });
 
@@ -92,6 +94,8 @@ export default async function Home() {
       photoUrl: row.photo_url,
       avgRating: rating?.avg_rating ?? null,
       reviewCount: rating?.review_count ?? 0,
+      bio: row.bio,
+      suiteLabel: row.suite_label,
       schedule: (row.schedule as WorkingHourEntry[]) ?? settings.workingHours,
     };
   });

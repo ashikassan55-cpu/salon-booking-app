@@ -78,6 +78,8 @@ export async function createStaff(formData: FormData): Promise<StaffFormState> {
     name: formData.get("name"),
     role: formData.get("role"),
     schedule,
+    bio: formData.get("bio") || undefined,
+    suiteLabel: formData.get("suiteLabel") || undefined,
   });
 
   if (!result.success) {
@@ -106,6 +108,8 @@ export async function createStaff(formData: FormData): Promise<StaffFormState> {
       role: result.data.role,
       schedule: result.data.schedule,
       photo_url: photoUrl ?? null,
+      bio: result.data.bio || null,
+      suite_label: result.data.suiteLabel || null,
     })
     .select("id")
     .single();
@@ -148,6 +152,8 @@ export async function updateStaff(
     name: formData.get("name"),
     role: formData.get("role"),
     schedule,
+    bio: formData.get("bio") || undefined,
+    suiteLabel: formData.get("suiteLabel") || undefined,
   });
 
   if (!result.success) {
@@ -175,6 +181,8 @@ export async function updateStaff(
       name: result.data.name,
       role: result.data.role,
       schedule: result.data.schedule,
+      bio: result.data.bio || null,
+      suite_label: result.data.suiteLabel || null,
       ...(photoUrl ? { photo_url: photoUrl } : {}),
     })
     .eq("id", id);

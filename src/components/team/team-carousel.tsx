@@ -1,13 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import type {
   Service,
   StaffReview,
   StaffServiceOffering,
   TeamMember,
 } from "@/lib/types";
-import { AvatarPlaceholder } from "@/components/ui/placeholder-image";
+import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import { StaffProfileModal } from "./staff-profile-modal";
 
 type StaffServicePricing = {
@@ -28,6 +29,7 @@ export function TeamGrid({
   reviews: StaffReview[];
 }) {
   const [selected, setSelected] = useState<TeamMember | null>(null);
+  const t = useTranslations("PublicTeam");
 
   const offerings: StaffServiceOffering[] = useMemo(() => {
     if (!selected) return [];
@@ -53,37 +55,53 @@ export function TeamGrid({
 
   return (
     <>
-      <div className="flex flex-wrap justify-center gap-x-8 gap-y-14">
+      <div className="flex flex-wrap justify-center gap-8">
         {members.map((member) => (
           <button
             key={member.id}
             type="button"
             onClick={() => setSelected(member)}
-            className="flex w-32 flex-col items-center text-center sm:w-36"
+            className="w-72 overflow-hidden rounded-xl border border-white/10 bg-neutral-900 text-start transition-colors hover:border-white/25 sm:w-80"
           >
-            <div className="relative">
+            <div className="relative aspect-[4/5] w-full overflow-hidden">
               {member.photoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element -- external Supabase Storage URL
                 <img
                   src={member.photoUrl}
                   alt={member.name}
-                  className="h-28 w-28 rounded-full border border-border object-cover sm:h-32 sm:w-32"
+                  className="h-full w-full object-cover"
                 />
               ) : (
-                <AvatarPlaceholder
-                  name={member.name}
-                  className="h-28 w-28 sm:h-32 sm:w-32"
-                />
+                <PlaceholderImage label={member.name} className="h-full w-full" />
               )}
               {member.reviewCount > 0 && member.avgRating !== null && (
-                <span className="absolute -bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-xs font-semibold whitespace-nowrap shadow-sm">
-                  <span className="text-yellow-500">★</span>
+                <span className="absolute top-3 start-3 flex items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-white">
+                  <span className="text-yellow-400">★</span>
                   {member.avgRating.toFixed(1)}
                 </span>
               )}
             </div>
-            <p className="mt-4 font-semibold">{member.name}</p>
-            <p className="text-sm text-muted">{member.role}</p>
+            <div className="p-5">
+              <p className="text-xs font-semibold tracking-widest text-neutral-400 uppercase">
+                {member.role}
+              </p>
+              <p className="mt-1 text-xl font-bold text-white">{member.name}</p>
+              {member.bio && (
+                <p className="mt-2 text-sm text-neutral-400">{member.bio}</p>
+              )}
+              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+                {member.suiteLabel ? (
+                  <span className="text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+                    {member.suiteLabel}
+                  </span>
+                ) : (
+                  <span />
+                )}
+                <span className="rounded-full bg-white px-4 py-2 text-xs font-semibold tracking-wide text-black uppercase">
+                  {t("bookSuiteButton")}
+                </span>
+              </div>
+            </div>
           </button>
         ))}
       </div>

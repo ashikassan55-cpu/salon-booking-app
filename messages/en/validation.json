@@ -34,7 +34,9 @@
     },
     "staff": {
       "nameMin": "Enter a stylist name",
-      "roleMin": "Enter a role or title"
+      "roleMin": "Enter a role or title",
+      "bioMax": "Keep the bio under 300 characters",
+      "suiteLabelMax": "Keep the suite label under 40 characters"
     }
   }
 }

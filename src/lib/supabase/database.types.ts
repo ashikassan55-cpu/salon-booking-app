@@ -72,6 +72,8 @@ export type StaffRow = {
   photo_url: string | null;
   schedule: unknown;
   is_active: boolean;
+  bio: string | null;
+  suite_label: string | null;
   created_at: string;
 };
 
@@ -82,6 +84,8 @@ type StaffInsert = {
   photo_url?: string | null;
   schedule: unknown;
   is_active?: boolean;
+  bio?: string | null;
+  suite_label?: string | null;
   created_at?: string;
 };
 

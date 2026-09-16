@@ -196,6 +196,39 @@ export function StaffDrawer({
             />
           </div>
 
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="bio"
+              className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
+            >
+              {t("bioLabel")}
+            </label>
+            <textarea
+              id="bio"
+              name="bio"
+              defaultValue={staff?.bio ?? ""}
+              rows={2}
+              placeholder={t("bioPlaceholder")}
+              className="border border-admin-border px-3 py-2 text-sm focus:border-admin-accent focus:outline-none"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="suiteLabel"
+              className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
+            >
+              {t("suiteLabelLabel")}
+            </label>
+            <input
+              id="suiteLabel"
+              name="suiteLabel"
+              defaultValue={staff?.suiteLabel ?? ""}
+              placeholder={t("suiteLabelPlaceholder")}
+              className="border border-admin-border px-3 py-2 text-sm focus:border-admin-accent focus:outline-none"
+            />
+          </div>
+
           <div className="flex flex-col gap-1.5 border-t border-admin-border pt-3">
             <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
               {t("weeklySchedule")}

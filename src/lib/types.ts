@@ -34,6 +34,8 @@ export type Staff = {
   photoUrl: string | null;
   schedule: WorkingHourEntry[];
   isActive: boolean;
+  bio: string | null;
+  suiteLabel: string | null;
 };
 
 /** One {service, price override} pairing for a stylist. */
@@ -50,6 +52,8 @@ export type TeamMember = {
   photoUrl: string | null;
   avgRating: number | null;
   reviewCount: number;
+  bio: string | null;
+  suiteLabel: string | null;
 };
 
 /** A stylist as the booking flow needs them — same public fields as

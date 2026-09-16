@@ -30,9 +30,9 @@ export async function TeamSection({
   const t = await getTranslations("PublicTeam");
 
   return (
-    <section className="bg-background px-6 py-16 text-foreground">
+    <section className="bg-neutral-950 px-6 py-16 text-white">
       <div className="mx-auto max-w-6xl">
-        <p className="text-xs font-semibold tracking-[0.2em] text-muted uppercase">
+        <p className="text-xs font-semibold tracking-[0.2em] text-neutral-400 uppercase">
           {t("eyebrow")}
         </p>
         <h2 className="mt-3 max-w-2xl text-2xl font-bold tracking-tight uppercase sm:text-3xl">
@@ -48,12 +48,12 @@ export async function TeamSection({
           />
         </div>
 
-        <dl className="mt-10 grid grid-cols-2 gap-8 border-t border-border pt-8 sm:grid-cols-4">
+        <dl className="mt-10 grid grid-cols-2 gap-8 border-t border-white/10 pt-8 sm:grid-cols-4">
           {STAT_KEYS.map((key) => (
             <div key={key}>
               <dt className="sr-only">{t(`stats.${key}`)}</dt>
               <dd className="text-3xl font-bold">{teamStatValues[key]}</dd>
-              <p className="mt-1 text-xs text-muted uppercase">
+              <p className="mt-1 text-xs text-neutral-400 uppercase">
                 {t(`stats.${key}`)}
               </p>
             </div>
