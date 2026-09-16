@@ -53,13 +53,13 @@ export function TeamGrid({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-4">
+      <div className="flex flex-wrap justify-center gap-x-8 gap-y-14">
         {members.map((member) => (
           <button
             key={member.id}
             type="button"
             onClick={() => setSelected(member)}
-            className="flex flex-col items-center text-center"
+            className="flex w-32 flex-col items-center text-center sm:w-36"
           >
             <div className="relative">
               {member.photoUrl ? (
