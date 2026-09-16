@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { StaffReview, StaffServiceOffering, TeamMember } from "@/lib/types";
 import { AvatarPlaceholder } from "@/components/ui/placeholder-image";
 import { formatCurrency } from "@/lib/currency";
@@ -19,8 +19,8 @@ function seededInt(seed: string, min: number, max: number) {
   return min + (hash % (max - min + 1));
 }
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString(undefined, {
+function formatDate(iso: string, locale: string) {
+  return new Date(iso).toLocaleDateString(locale, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -49,6 +49,7 @@ export function StaffProfileModal({
 }) {
   const [tab, setTab] = useState<Tab>("profile");
   const t = useTranslations("PublicTeam");
+  const locale = useLocale();
 
   const appointmentsCompleted = seededInt(member.id, 800, 6000);
   const clientsServed = seededInt(member.id, 200, 1800);
@@ -211,7 +212,7 @@ export function StaffProfileModal({
                     <div className="flex items-center justify-between">
                       <Stars rating={review.rating} />
                       <span className="text-xs text-gray-400">
-                        {formatDate(review.createdAt)}
+                        {formatDate(review.createdAt, locale)}
                       </span>
                     </div>
                     {review.comment && (
