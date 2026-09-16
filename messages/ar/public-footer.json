@@ -1,0 +1,22 @@
+{
+  "PublicFooter": {
+    "workingHours": "ساعات العمل",
+    "location": "الموقع",
+    "follow": "تابعنا",
+    "instagram": "إنستغرام",
+    "facebook": "فيسبوك",
+    "allRightsReserved": "جميع الحقوق محفوظة.",
+    "closed": "مغلق",
+    "am": "ص",
+    "pm": "م",
+    "days": {
+      "sun": "أحد",
+      "mon": "إثن",
+      "tue": "ثلا",
+      "wed": "أرب",
+      "thu": "خمي",
+      "fri": "جمع",
+      "sat": "سبت"
+    }
+  }
+}

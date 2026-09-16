@@ -1,0 +1,22 @@
+{
+  "PublicFooter": {
+    "workingHours": "Working Hours",
+    "location": "Location",
+    "follow": "Follow",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "allRightsReserved": "All rights reserved.",
+    "closed": "Closed",
+    "am": "AM",
+    "pm": "PM",
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    }
+  }
+}

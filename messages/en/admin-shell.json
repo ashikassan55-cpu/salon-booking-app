@@ -1,0 +1,19 @@
+{
+  "AdminShell": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "siteSettings": "Site Settings",
+      "heroSection": "Hero Section",
+      "services": "Services",
+      "gallery": "Gallery",
+      "staff": "Staff"
+    },
+    "salonManagement": "Salon Management",
+    "ownerAdmin": "Owner / Admin",
+    "signOut": "Sign Out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close",
+    "languageEnglish": "EN",
+    "languageArabic": "AR"
+  }
+}

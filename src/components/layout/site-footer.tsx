@@ -1,25 +1,33 @@
+import { getTranslations } from "next-intl/server";
 import type { SiteSettings, WorkingHourEntry } from "@/lib/settings";
 
-const SHORT_DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
 // Monday-first reading order, rather than JS's Sunday-first Date.getDay().
 const DISPLAY_ORDER = [1, 2, 3, 4, 5, 6, 0];
 
-function formatTime(hour: number, minute: number) {
-  const period = hour >= 12 ? "PM" : "AM";
+function formatTime(
+  hour: number,
+  minute: number,
+  t: Awaited<ReturnType<typeof getTranslations<"PublicFooter">>>,
+) {
+  const period = hour >= 12 ? t("pm") : t("am");
   const displayHour = hour % 12 === 0 ? 12 : hour % 12;
   const displayMinute = minute.toString().padStart(2, "0");
   return `${displayHour}:${displayMinute} ${period}`;
 }
 
-function formatDayHours(entry: WorkingHourEntry) {
-  if (!entry.open) return "Closed";
-  return `${formatTime(entry.startHour, entry.startMinute)} - ${formatTime(
-    entry.endHour,
-    entry.endMinute,
-  )}`;
-}
+export async function SiteFooter({ settings }: { settings: SiteSettings }) {
+  const t = await getTranslations("PublicFooter");
 
-export function SiteFooter({ settings }: { settings: SiteSettings }) {
+  function formatDayHours(entry: WorkingHourEntry) {
+    if (!entry.open) return t("closed");
+    return `${formatTime(entry.startHour, entry.startMinute, t)} - ${formatTime(
+      entry.endHour,
+      entry.endMinute,
+      t,
+    )}`;
+  }
+
   const orderedHours = DISPLAY_ORDER.map((weekday) =>
     settings.workingHours.find((h) => h.weekday === weekday),
   ).filter((h): h is WorkingHourEntry => !!h);
@@ -39,13 +47,13 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
 
         <div>
           <p className="text-xs font-semibold tracking-wide text-muted-dark uppercase">
-            Working Hours
+            {t("workingHours")}
           </p>
           <ul className="mt-3 space-y-1 text-sm">
             {orderedHours.map((entry) => (
               <li key={entry.weekday} className="flex justify-between gap-4">
                 <span className="text-muted-dark">
-                  {SHORT_DAY_LABELS[entry.weekday]}
+                  {t(`days.${DAY_KEYS[entry.weekday]}`)}
                 </span>
                 <span>{formatDayHours(entry)}</span>
               </li>
@@ -55,7 +63,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
 
         <div>
           <p className="text-xs font-semibold tracking-wide text-muted-dark uppercase">
-            Location
+            {t("location")}
           </p>
           <p className="mt-3 text-sm whitespace-pre-line">
             {settings.address}
@@ -66,7 +74,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
 
         <div>
           <p className="text-xs font-semibold tracking-wide text-muted-dark uppercase">
-            Follow
+            {t("follow")}
           </p>
           <div className="mt-3 flex gap-4 text-sm">
             {settings.instagramUrl && (
@@ -74,7 +82,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
                 href={settings.instagramUrl}
                 className="text-muted-dark hover:text-foreground-dark"
               >
-                Instagram
+                {t("instagram")}
               </a>
             )}
             {settings.facebookUrl && (
@@ -82,7 +90,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
                 href={settings.facebookUrl}
                 className="text-muted-dark hover:text-foreground-dark"
               >
-                Facebook
+                {t("facebook")}
               </a>
             )}
           </div>
@@ -90,8 +98,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
       </div>
 
       <div className="border-t border-border-dark px-6 py-6 text-center text-xs text-muted-dark">
-        &copy; {new Date().getFullYear()} {settings.name}. All rights
-        reserved.
+        &copy; {new Date().getFullYear()} {settings.name}. {t("allRightsReserved")}
       </div>
     </footer>
   );

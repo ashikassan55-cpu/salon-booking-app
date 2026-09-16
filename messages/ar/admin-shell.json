@@ -1,0 +1,19 @@
+{
+  "AdminShell": {
+    "nav": {
+      "dashboard": "لوحة التحكم",
+      "siteSettings": "إعدادات الموقع",
+      "heroSection": "قسم الواجهة",
+      "services": "الخدمات",
+      "gallery": "المعرض",
+      "staff": "الطاقم"
+    },
+    "salonManagement": "إدارة الصالون",
+    "ownerAdmin": "المالك / المسؤول",
+    "signOut": "تسجيل الخروج",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق",
+    "languageEnglish": "EN",
+    "languageArabic": "AR"
+  }
+}

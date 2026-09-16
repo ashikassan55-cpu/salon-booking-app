@@ -60,6 +60,16 @@
   --font-admin-body: var(--font-inter);
 }
 
+/*
+ * RTL font swap: when <html dir="rtl"> (Arabic locale), swap the sans
+ * font to one with real Arabic glyph coverage. Scoped to the attribute
+ * selector rather than a JS/className conditional, so it can never drift
+ * out of sync with the actually-resolved direction.
+ */
+[dir="rtl"] {
+  --font-sans: var(--font-noto-arabic);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

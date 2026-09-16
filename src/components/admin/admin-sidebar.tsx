@@ -3,16 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { signOut } from "@/app/admin/(shell)/actions";
+import { AdminLanguageSwitcher } from "./language-switcher";
 
 const NAV_ITEMS = [
-  { href: "/admin", label: "Dashboard", icon: DashboardIcon },
-  { href: "/admin/settings", label: "Site Settings", icon: SettingsIcon },
-  { href: "/admin/hero", label: "Hero Section", icon: HeroIcon },
-  { href: "/admin/services", label: "Services", icon: ServicesIcon },
-  { href: "/admin/gallery", label: "Gallery", icon: GalleryIcon },
-  { href: "/admin/staff", label: "Staff", icon: StaffIcon },
-];
+  { href: "/admin", key: "dashboard", icon: DashboardIcon },
+  { href: "/admin/settings", key: "siteSettings", icon: SettingsIcon },
+  { href: "/admin/hero", key: "heroSection", icon: HeroIcon },
+  { href: "/admin/services", key: "services", icon: ServicesIcon },
+  { href: "/admin/gallery", key: "gallery", icon: GalleryIcon },
+  { href: "/admin/staff", key: "staff", icon: StaffIcon },
+] as const;
 
 export function AdminSidebar({
   userEmail,
@@ -23,17 +25,18 @@ export function AdminSidebar({
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const t = useTranslations("AdminShell");
 
   const isActive = (href: string) =>
     href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
 
   return (
     <>
-      <header className="fixed top-0 right-0 left-0 z-40 flex h-14 items-center justify-between border-b border-admin-border bg-admin-surface px-4 lg:hidden">
+      <header className="fixed top-0 inset-inline-0 z-40 flex h-14 items-center justify-between border-b border-admin-border bg-admin-surface px-4 lg:hidden">
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Open menu"
+          aria-label={t("openMenu")}
           className="p-1"
         >
           <MenuIcon />
@@ -50,7 +53,7 @@ export function AdminSidebar({
             className="absolute inset-0 bg-black/40"
             onClick={() => setOpen(false)}
           />
-          <div className="relative flex h-full w-72 max-w-[80%] flex-col justify-between border-r border-admin-border bg-admin-surface">
+          <div className="relative flex h-full w-72 max-w-[80%] flex-col justify-between border-e border-admin-border bg-admin-surface">
             <SidebarContent
               isActive={isActive}
               userEmail={userEmail}
@@ -61,7 +64,7 @@ export function AdminSidebar({
         </div>
       )}
 
-      <aside className="fixed top-0 left-0 hidden h-screen w-64 flex-col justify-between border-r border-admin-border bg-admin-surface lg:flex">
+      <aside className="fixed top-0 start-0 hidden h-screen w-64 flex-col justify-between border-e border-admin-border bg-admin-surface lg:flex">
         <SidebarContent isActive={isActive} userEmail={userEmail} siteName={siteName} />
       </aside>
 
@@ -81,6 +84,8 @@ function SidebarContent({
   siteName: string;
   onNavigate?: () => void;
 }) {
+  const t = useTranslations("AdminShell");
+
   return (
     <div className="flex h-full flex-col justify-between">
       <div>
@@ -94,7 +99,7 @@ function SidebarContent({
         </div>
 
         <p className="px-4 pt-5 pb-1 font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-          Salon Management
+          {t("salonManagement")}
         </p>
 
         <nav className="flex flex-col gap-1 px-2">
@@ -112,7 +117,7 @@ function SidebarContent({
                 }`}
               >
                 <item.icon />
-                {item.label}
+                {t(`nav.${item.key}`)}
               </Link>
             );
           })}
@@ -120,9 +125,11 @@ function SidebarContent({
       </div>
 
       <div className="flex flex-col gap-3 border-t border-admin-border p-4">
+        <AdminLanguageSwitcher />
+
         <div className="flex flex-col gap-0.5 overflow-hidden">
           <span className="font-admin-display text-[10px] font-bold tracking-widest text-admin-muted uppercase">
-            Owner / Admin
+            {t("ownerAdmin")}
           </span>
           <span className="truncate text-sm text-admin-ink">{userEmail}</span>
         </div>
@@ -131,7 +138,7 @@ function SidebarContent({
             type="submit"
             className="flex w-full items-center justify-between border border-admin-border px-3 py-2 font-admin-display text-[11px] font-bold tracking-widest text-admin-ink uppercase transition-colors hover:bg-admin-accent hover:text-admin-accent-ink"
           >
-            Sign Out
+            {t("signOut")}
             <LogoutIcon />
           </button>
         </form>
@@ -203,7 +210,15 @@ function StaffIcon() {
 
 function LogoutIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      className="rtl:-scale-x-100"
+    >
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
       <polyline points="16 17 21 12 16 7" />
       <line x1="21" y1="12" x2="9" y2="12" />

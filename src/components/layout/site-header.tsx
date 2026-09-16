@@ -2,10 +2,19 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { siteConfig } from "@/lib/site-config";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "./language-switcher";
 
 export function SiteHeader({ siteName }: { siteName: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const t = useTranslations("PublicHeader");
+
+  const nav = [
+    { key: "home", href: "/" },
+    { key: "services", href: "#services" },
+    { key: "gallery", href: "#gallery" },
+    { key: "contact", href: "#contact" },
+  ] as const;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border-dark bg-surface-dark text-foreground-dark">
@@ -15,33 +24,35 @@ export function SiteHeader({ siteName }: { siteName: string }) {
         </Link>
 
         <nav className="hidden items-center gap-8 text-sm font-medium tracking-wide uppercase md:flex">
-          {siteConfig.nav.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className="text-foreground-dark/80 transition-colors hover:text-foreground-dark"
             >
-              {item.label}
+              {t(`nav.${item.key}`)}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-4">
+          <LanguageSwitcher className="hidden sm:flex" />
+
           <Link
             href="#booking"
             className="hidden bg-accent px-4 py-2 text-xs font-semibold tracking-wide text-accent-foreground uppercase transition-opacity hover:opacity-90 sm:inline-block"
           >
-            {siteConfig.bookingCta}
+            {t("bookNow")}
           </Link>
 
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
-            aria-label="Toggle menu"
+            aria-label={t("toggleMenu")}
             className="flex h-9 w-9 items-center justify-center border border-border-dark md:hidden"
           >
-            <span className="sr-only">Toggle menu</span>
+            <span className="sr-only">{t("toggleMenu")}</span>
             {menuOpen ? "✕" : "☰"}
           </button>
         </div>
@@ -49,14 +60,14 @@ export function SiteHeader({ siteName }: { siteName: string }) {
 
       {menuOpen && (
         <nav className="flex flex-col border-t border-border-dark px-6 py-4 text-sm font-medium tracking-wide uppercase md:hidden">
-          {siteConfig.nav.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
               className="py-2 text-foreground-dark/80 transition-colors hover:text-foreground-dark"
             >
-              {item.label}
+              {t(`nav.${item.key}`)}
             </Link>
           ))}
           <Link
@@ -64,8 +75,9 @@ export function SiteHeader({ siteName }: { siteName: string }) {
             onClick={() => setMenuOpen(false)}
             className="mt-2 bg-accent px-4 py-2 text-center text-xs font-semibold text-accent-foreground"
           >
-            {siteConfig.bookingCta}
+            {t("bookNow")}
           </Link>
+          <LanguageSwitcher className="mt-4 justify-center" />
         </nav>
       )}
     </header>

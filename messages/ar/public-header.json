@@ -1,0 +1,14 @@
+{
+  "PublicHeader": {
+    "nav": {
+      "home": "الرئيسية",
+      "services": "الخدمات",
+      "gallery": "المعرض",
+      "contact": "تواصل معنا"
+    },
+    "bookNow": "احجز الآن",
+    "toggleMenu": "فتح القائمة",
+    "languageEnglish": "EN",
+    "languageArabic": "AR"
+  }
+}
