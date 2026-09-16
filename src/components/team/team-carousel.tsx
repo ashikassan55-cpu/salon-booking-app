@@ -61,9 +61,9 @@ export function TeamGrid({
             key={member.id}
             type="button"
             onClick={() => setSelected(member)}
-            className="w-72 overflow-hidden rounded-xl border border-white/10 bg-neutral-900 text-start transition-colors hover:border-white/25 sm:w-80"
+            className="flex h-full w-60 flex-col overflow-hidden rounded-xl border border-white/10 bg-neutral-900 text-start transition-colors hover:border-white/25 sm:w-64"
           >
-            <div className="relative aspect-[4/5] w-full overflow-hidden">
+            <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden">
               {member.photoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element -- external Supabase Storage URL
                 <img
@@ -81,15 +81,15 @@ export function TeamGrid({
                 </span>
               )}
             </div>
-            <div className="p-5">
+            <div className="flex flex-1 flex-col p-4">
               <p className="text-xs font-semibold tracking-widest text-neutral-400 uppercase">
                 {member.role}
               </p>
-              <p className="mt-1 text-xl font-bold text-white">{member.name}</p>
+              <p className="mt-1 text-lg font-bold text-white">{member.name}</p>
               {member.bio && (
                 <p className="mt-2 text-sm text-neutral-400">{member.bio}</p>
               )}
-              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+              <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/10 pt-4">
                 {member.suiteLabel ? (
                   <span className="text-xs font-semibold tracking-widest text-neutral-500 uppercase">
                     {member.suiteLabel}
@@ -97,7 +97,7 @@ export function TeamGrid({
                 ) : (
                   <span />
                 )}
-                <span className="rounded-full bg-white px-4 py-2 text-xs font-semibold tracking-wide text-black uppercase">
+                <span className="shrink-0 rounded-full bg-white px-4 py-2 text-xs font-semibold tracking-wide text-black uppercase">
                   {t("bookSuiteButton")}
                 </span>
               </div>
