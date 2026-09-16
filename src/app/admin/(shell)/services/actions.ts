@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { serviceSchema } from "@/lib/validation/service";
 
@@ -9,6 +10,7 @@ export type ServiceFormState = { error: string | null };
 async function uploadServiceImage(
   supabase: Awaited<ReturnType<typeof createClient>>,
   file: File,
+  t: Awaited<ReturnType<typeof getTranslations<"AdminServices">>>,
 ): Promise<{ url?: string; error?: string }> {
   const path = `services/${crypto.randomUUID()}-${file.name}`;
   const { error: uploadError } = await supabase.storage
@@ -16,7 +18,7 @@ async function uploadServiceImage(
     .upload(path, file, { contentType: file.type });
 
   if (uploadError) {
-    return { error: "Image upload failed — please try again." };
+    return { error: t("imageUploadError") };
   }
 
   const { data } = supabase.storage.from("gallery").getPublicUrl(path);
@@ -26,6 +28,8 @@ async function uploadServiceImage(
 export async function createService(
   formData: FormData,
 ): Promise<ServiceFormState> {
+  const t = await getTranslations("AdminServices");
+
   const result = serviceSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description") || undefined,
@@ -34,7 +38,7 @@ export async function createService(
   });
 
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Please check the form" };
+    return { error: result.error.issues[0]?.message ?? t("checkForm") };
   }
 
   const supabase = await createClient();
@@ -42,7 +46,7 @@ export async function createService(
   let imageUrl: string | undefined;
   const imageFile = formData.get("image");
   if (imageFile instanceof File && imageFile.size > 0) {
-    const uploaded = await uploadServiceImage(supabase, imageFile);
+    const uploaded = await uploadServiceImage(supabase, imageFile, t);
     if (uploaded.error) return { error: uploaded.error };
     imageUrl = uploaded.url;
   }
@@ -56,7 +60,7 @@ export async function createService(
   });
 
   if (error) {
-    return { error: "Couldn't create the service — please try again." };
+    return { error: t("createError") };
   }
 
   revalidatePath("/admin/services");
@@ -68,6 +72,8 @@ export async function updateService(
   id: string,
   formData: FormData,
 ): Promise<ServiceFormState> {
+  const t = await getTranslations("AdminServices");
+
   const result = serviceSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description") || undefined,
@@ -76,7 +82,7 @@ export async function updateService(
   });
 
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Please check the form" };
+    return { error: result.error.issues[0]?.message ?? t("checkForm") };
   }
 
   const supabase = await createClient();
@@ -84,7 +90,7 @@ export async function updateService(
   let imageUrl: string | undefined;
   const imageFile = formData.get("image");
   if (imageFile instanceof File && imageFile.size > 0) {
-    const uploaded = await uploadServiceImage(supabase, imageFile);
+    const uploaded = await uploadServiceImage(supabase, imageFile, t);
     if (uploaded.error) return { error: uploaded.error };
     imageUrl = uploaded.url;
   }
@@ -101,7 +107,7 @@ export async function updateService(
     .eq("id", id);
 
   if (error) {
-    return { error: "Couldn't save the service — please try again." };
+    return { error: t("updateError") };
   }
 
   revalidatePath("/admin/services");

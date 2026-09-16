@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { GalleryGrid } from "@/components/admin/gallery-grid";
 import { GalleryUploader } from "@/components/admin/gallery-uploader";
 import { createClient } from "@/lib/supabase/server";
@@ -8,18 +9,18 @@ export default async function AdminGalleryPage() {
     .from("gallery")
     .select("*")
     .order("created_at", { ascending: false });
+  const t = await getTranslations("AdminGallery");
 
   return (
     <div>
       <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-        Portfolio &amp; Media
+        {t("eyebrow")}
       </p>
       <h1 className="mt-1 font-admin-display text-4xl font-bold tracking-tight text-admin-ink uppercase">
-        Gallery
+        {t("heading")}
       </h1>
       <p className="mt-2 max-w-xl text-sm text-admin-muted">
-        Upload photos for the public gallery — automatically compressed to
-        WebP, resized, and shown live on the homepage.
+        {t("subtitle")}
       </p>
 
       <div className="mt-8">
@@ -28,12 +29,12 @@ export default async function AdminGalleryPage() {
 
       <div className="mt-10">
         <h2 className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-          Current Gallery ({images?.length ?? 0})
+          {t("currentGallery", { count: images?.length ?? 0 })}
         </h2>
 
         {error ? (
           <p className="mt-3 text-sm text-admin-error" role="alert">
-            Couldn&apos;t load gallery images: {error.message}
+            {t("loadError", { message: error.message })}
           </p>
         ) : (
           <div className="mt-4">

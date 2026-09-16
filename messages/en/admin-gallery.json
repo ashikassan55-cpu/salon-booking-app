@@ -1,0 +1,36 @@
+{
+  "AdminGallery": {
+    "eyebrow": "Portfolio & Media",
+    "heading": "Gallery",
+    "subtitle": "Upload photos for the public gallery — automatically compressed to WebP, resized, and shown live on the homepage.",
+    "currentGallery": "Current Gallery ({count})",
+    "loadError": "Couldn't load gallery images: {message}",
+    "emptyState": "No photos yet — upload your first one above.",
+    "card": {
+      "deleteConfirm": "Delete this photo? This can't be undone.",
+      "deleting": "…",
+      "delete": "Delete",
+      "captionPlaceholder": "Add a caption…",
+      "save": "Save",
+      "saving": "…"
+    },
+    "uploader": {
+      "pipelineLabel": "■ Ingestion Pipeline // Upload Photo",
+      "autoOptimized": "Auto-Optimized",
+      "clickToChoose": "Click to choose a photo",
+      "specNote": "Converted to WebP, resized to max 1200px, 85% quality",
+      "imageProcessError": "Couldn't process that image — try a different file.",
+      "compressing": "Compressing… {progress}%",
+      "compressedPreviewAlt": "Compressed preview",
+      "convertedToWebp": "Converted to WebP",
+      "captionLabel": "Caption (Optional)",
+      "confirmAdd": "Confirm & Add to Gallery",
+      "uploading": "Uploading…",
+      "done": "Uploaded — it's now live in the public gallery.",
+      "chooseImageError": "Choose an image to upload.",
+      "uploadError": "Upload failed — please try again.",
+      "saveRecordError": "Image uploaded but saving its record failed."
+    },
+    "captionSaveError": "Couldn't save the caption — please try again."
+  }
+}

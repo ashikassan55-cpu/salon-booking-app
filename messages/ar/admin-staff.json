@@ -1,0 +1,57 @@
+{
+  "AdminStaff": {
+    "eyebrow": "الطاقم والفريق",
+    "heading": "الفريق",
+    "stylistCount": "{count, plural, one {متخصص واحد} two {متخصصان} few {# متخصصين} many {# متخصصاً} other {# متخصص}}",
+    "addMember": "+ إضافة عضو فريق",
+    "emptyState": "لا يوجد متخصصون بعد — أضف أول واحد من الأعلى.",
+    "loadError": "تعذر تحميل الفريق: {message}",
+    "columns": {
+      "stylist": "المتخصص",
+      "role": "الدور",
+      "services": "الخدمات",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "editStylist": "تعديل المتخصص",
+    "edit": "تعديل",
+    "deactivate": "تعطيل",
+    "reactivate": "إعادة تفعيل",
+    "toggling": "…",
+    "drawer": {
+      "inspectorLabel": "لوحة التفاصيل",
+      "newMemberLabel": "عضو فريق جديد",
+      "editTitle": "تعديل عضو الفريق // {name}",
+      "addTitle": "إضافة عضو فريق",
+      "close": "إغلاق",
+      "photoPlaceholder": "صورة",
+      "previewAlt": "معاينة",
+      "compressing": "جارٍ الضغط…",
+      "replacePhoto": "استبدال الصورة",
+      "uploadPhoto": "رفع صورة",
+      "photoError": "تعذرت معالجة هذه الصورة — جرّب ملفاً آخر.",
+      "fullNameLabel": "الاسم الكامل",
+      "fullNamePlaceholder": "مثال: إلينا روستوفا",
+      "roleLabel": "الدور / المسمى الوظيفي",
+      "rolePlaceholder": "مثال: كبير خبراء التلوين والمدير الفني",
+      "weeklySchedule": "الجدول الأسبوعي",
+      "servicesPricing": "الخدمات والأسعار",
+      "cancel": "إلغاء",
+      "save": "حفظ العضو",
+      "saving": "جارٍ الحفظ…"
+    },
+    "pricing": {
+      "noServices": "لا توجد خدمات بعد — أضف واحدة ضمن الخدمات أولاً.",
+      "basePrice": "(الأساسي {price})"
+    },
+    "checkForm": "يرجى مراجعة النموذج",
+    "scheduleMalformed": "بيانات الجدول غير صحيحة — يرجى المحاولة مرة أخرى.",
+    "pricingMalformed": "بيانات التسعير غير صحيحة — يرجى المحاولة مرة أخرى.",
+    "photoUploadError": "فشل رفع الصورة — يرجى المحاولة مرة أخرى.",
+    "createError": "تعذر إنشاء المتخصص — يرجى المحاولة مرة أخرى.",
+    "updateError": "تعذر حفظ المتخصص — يرجى المحاولة مرة أخرى.",
+    "pricingSaveError": "تم حفظ المتخصص، لكن تعذر حفظ الأسعار — يرجى التعديل والمحاولة مرة أخرى."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "AdminBookings": {
+    "eyebrow": "نظرة عامة // نشاط لحظي",
+    "heading": "لوحة التحكم",
+    "subtitle": "الحجوزات والإيرادات والحالة في لمحة واحدة.",
+    "loadError": "تعذر تحميل الحجوزات: {message}",
+    "kpi": {
+      "bookingsToday": "حجوزات اليوم",
+      "bookingsThisWeek": "حجوزات هذا الأسبوع",
+      "bookingsThisMonth": "حجوزات هذا الشهر",
+      "estimatedRevenue": "الإيرادات المقدرة",
+      "avgTicket": "متوسط الفاتورة: {price}",
+      "confirmedCompletedOnly": "المؤكدة والمكتملة فقط",
+      "popularServices": "الخدمات الأكثر طلباً",
+      "noBookingsYet": "لا توجد حجوزات بعد.",
+      "statusBreakdown": "توزيع حالة الحجوزات"
+    },
+    "status": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
+    "tableHeading": "الحجوزات",
+    "filters": {
+      "status": "الحالة",
+      "all": "الكل",
+      "date": "التاريخ",
+      "filter": "تصفية",
+      "clear": "مسح عوامل التصفية"
+    },
+    "showingCount": "عرض {count}",
+    "noMatch": "لا توجد حجوزات مطابقة لعوامل التصفية هذه.",
+    "columns": {
+      "customer": "العميل",
+      "service": "الخدمة",
+      "stylist": "المتخصص",
+      "dateTime": "التاريخ والوقت",
+      "status": "الحالة",
+      "review": "التقييم",
+      "actions": "الإجراءات"
+    },
+    "reviewed": "تم التقييم",
+    "sendReview": "إرسال طلب تقييم",
+    "reviewMessage": "مرحباً {name}! شكراً لزيارتك {salonName} من أجل {service}. إذا كان لديك 10 ثوانٍ، يرجى تقييم تجربتك مع {stylist}: {url}",
+    "ourTeam": "فريقنا",
+    "statusActions": {
+      "confirm": "تأكيد",
+      "complete": "إكمال",
+      "cancel": "إلغاء"
+    }
+  }
+}

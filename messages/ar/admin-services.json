@@ -1,0 +1,51 @@
+{
+  "AdminServices": {
+    "eyebrow": "إدارة الكتالوج",
+    "heading": "الخدمات",
+    "activeCount": "{count, plural, one {خدمة نشطة واحدة} two {خدمتان نشطتان} few {# خدمات نشطة} many {# خدمة نشطة} other {# خدمة نشطة}}",
+    "addService": "+ إضافة خدمة",
+    "emptyState": "لا توجد خدمات بعد — أضف أول خدمة من الأعلى.",
+    "loadError": "تعذر تحميل الخدمات: {message}",
+    "columns": {
+      "name": "الاسم",
+      "price": "السعر",
+      "duration": "المدة",
+      "description": "الوصف",
+      "actions": "الإجراءات"
+    },
+    "durationMinutes": "{minutes} دقيقة",
+    "editService": "تعديل الخدمة",
+    "edit": "تعديل",
+    "deleteService": "حذف الخدمة",
+    "delete": "حذف",
+    "deleting": "…",
+    "deleteConfirm": "هل تريد حذف هذه الخدمة من الكتالوج؟",
+    "drawer": {
+      "inspectorLabel": "لوحة التفاصيل",
+      "newItemLabel": "عنصر كتالوج جديد",
+      "editTitle": "تعديل الخدمة // {name}",
+      "addTitle": "إضافة خدمة جديدة",
+      "close": "إغلاق",
+      "nameLabel": "اسم الخدمة",
+      "namePlaceholder": "مثال: قصة شعر مميزة",
+      "descriptionLabel": "الوصف",
+      "descriptionPlaceholder": "ما الذي تتضمنه هذه الخدمة...",
+      "priceLabel": "السعر",
+      "durationLabel": "المدة (دقيقة)",
+      "imageLabel": "صورة الخدمة (اختياري)",
+      "autoOptimized": "محسّنة تلقائياً",
+      "convertedToWebp": "تم التحويل إلى WebP",
+      "compressing": "جارٍ الضغط…",
+      "previewAlt": "معاينة",
+      "dragDrop": "اسحب وأفلت صورة جديدة أو استبدل الملف",
+      "imageError": "تعذرت معالجة هذه الصورة — جرّب ملفاً آخر.",
+      "cancel": "إلغاء",
+      "save": "حفظ الخدمة",
+      "saving": "جارٍ الحفظ…"
+    },
+    "checkForm": "يرجى مراجعة النموذج",
+    "imageUploadError": "فشل رفع الصورة — يرجى المحاولة مرة أخرى.",
+    "createError": "تعذر إنشاء الخدمة — يرجى المحاولة مرة أخرى.",
+    "updateError": "تعذر حفظ الخدمة — يرجى المحاولة مرة أخرى."
+  }
+}

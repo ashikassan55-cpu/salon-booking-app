@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { compressImageToWebp } from "@/lib/image-compression";
 import { uploadGalleryImage } from "@/app/admin/(shell)/gallery/actions";
 
@@ -14,6 +15,7 @@ function formatBytes(bytes: number) {
 
 export function GalleryUploader() {
   const router = useRouter();
+  const t = useTranslations("AdminGallery.uploader");
   const [stage, setStage] = useState<Stage>("idle");
   const [progress, setProgress] = useState(0);
   const [originalSize, setOriginalSize] = useState<number | null>(null);
@@ -40,7 +42,7 @@ export function GalleryUploader() {
       setPreviewUrl(URL.createObjectURL(compressed));
       setStage("ready");
     } catch {
-      setError("Couldn't process that image — try a different file.");
+      setError(t("imageProcessError"));
       setStage("idle");
     }
   }
@@ -81,10 +83,10 @@ export function GalleryUploader() {
     <div className="border border-admin-border bg-admin-surface p-5">
       <div className="flex items-center justify-between">
         <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-ink uppercase">
-          ■ Ingestion Pipeline // Upload Photo
+          {t("pipelineLabel")}
         </p>
         <p className="font-admin-display text-[10px] font-bold tracking-widest text-admin-muted uppercase">
-          Auto-Optimized
+          {t("autoOptimized")}
         </p>
       </div>
 
@@ -93,11 +95,9 @@ export function GalleryUploader() {
         className="mt-4 flex cursor-pointer flex-col items-center gap-1 border border-dashed border-admin-border px-4 py-8 text-center transition-colors hover:border-admin-accent"
       >
         <span className="font-admin-display text-xs font-bold tracking-wider text-admin-ink uppercase">
-          Click to choose a photo
+          {t("clickToChoose")}
         </span>
-        <span className="text-xs text-admin-muted">
-          Converted to WebP, resized to max 1200px, 85% quality
-        </span>
+        <span className="text-xs text-admin-muted">{t("specNote")}</span>
       </label>
       <input
         ref={fileInputRef}
@@ -111,7 +111,7 @@ export function GalleryUploader() {
 
       {stage === "compressing" && (
         <p className="mt-3 font-admin-display text-xs font-bold tracking-wide text-admin-muted uppercase">
-          Compressing… {progress}%
+          {t("compressing", { progress })}
         </p>
       )}
 
@@ -120,12 +120,12 @@ export function GalleryUploader() {
           {/* eslint-disable-next-line @next/next/no-img-element -- transient client-side blob preview, not a served asset */}
           <img
             src={previewUrl}
-            alt="Compressed preview"
+            alt={t("compressedPreviewAlt")}
             className="h-16 w-16 shrink-0 border border-admin-border object-cover"
           />
           <div className="text-xs">
             <span className="bg-admin-accent px-1.5 py-0.5 font-admin-display font-bold tracking-wider text-admin-accent-ink uppercase">
-              Converted to WebP
+              {t("convertedToWebp")}
             </span>
             <p className="mt-1.5 tabular-nums text-admin-muted">
               {formatBytes(originalSize ?? 0)} &rarr;{" "}
@@ -150,7 +150,7 @@ export function GalleryUploader() {
               htmlFor="gallery-caption"
               className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
             >
-              Caption (Optional)
+              {t("captionLabel")}
             </label>
             <input
               id="gallery-caption"
@@ -164,20 +164,20 @@ export function GalleryUploader() {
             onClick={handleUpload}
             className="bg-admin-accent px-4 py-2.5 font-admin-display text-xs font-bold tracking-wider text-admin-accent-ink uppercase transition-colors hover:bg-neutral-800"
           >
-            Confirm &amp; Add to Gallery
+            {t("confirmAdd")}
           </button>
         </div>
       )}
 
       {stage === "uploading" && (
         <p className="mt-3 font-admin-display text-xs font-bold tracking-wide text-admin-muted uppercase">
-          Uploading…
+          {t("uploading")}
         </p>
       )}
 
       {stage === "done" && (
         <p className="mt-3 text-sm text-green-700" role="status">
-          Uploaded — it&apos;s now live in the public gallery.
+          {t("done")}
         </p>
       )}
 

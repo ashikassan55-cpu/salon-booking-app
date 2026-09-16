@@ -28,6 +28,13 @@ async function loadMessages(locale: AppLocale) {
     publicBooking,
     publicReview,
     adminShell,
+    adminBookings,
+    adminServices,
+    adminStaff,
+    adminGallery,
+    adminHero,
+    adminSettings,
+    adminLogin,
   ] = await Promise.all([
     import(`../../messages/${locale}/public-header.json`),
     import(`../../messages/${locale}/public-footer.json`),
@@ -39,6 +46,13 @@ async function loadMessages(locale: AppLocale) {
     import(`../../messages/${locale}/public-booking.json`),
     import(`../../messages/${locale}/public-review.json`),
     import(`../../messages/${locale}/admin-shell.json`),
+    import(`../../messages/${locale}/admin-bookings.json`),
+    import(`../../messages/${locale}/admin-services.json`),
+    import(`../../messages/${locale}/admin-staff.json`),
+    import(`../../messages/${locale}/admin-gallery.json`),
+    import(`../../messages/${locale}/admin-hero.json`),
+    import(`../../messages/${locale}/admin-settings.json`),
+    import(`../../messages/${locale}/admin-login.json`),
   ]);
 
   return {
@@ -52,6 +66,13 @@ async function loadMessages(locale: AppLocale) {
     ...publicBooking.default,
     ...publicReview.default,
     ...adminShell.default,
+    ...adminBookings.default,
+    ...adminServices.default,
+    ...adminStaff.default,
+    ...adminGallery.default,
+    ...adminHero.default,
+    ...adminSettings.default,
+    ...adminLogin.default,
   };
 }
 

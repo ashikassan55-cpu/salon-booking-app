@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { siteSettingsSchema } from "@/lib/validation/site-settings";
 
@@ -10,13 +11,15 @@ export async function updateSiteSettings(
   _prevState: SettingsFormState,
   formData: FormData,
 ): Promise<SettingsFormState> {
+  const t = await getTranslations("AdminSettings");
+
   const workingHoursRaw = formData.get("workingHours");
   let workingHours: unknown;
   try {
     workingHours =
       typeof workingHoursRaw === "string" ? JSON.parse(workingHoursRaw) : [];
   } catch {
-    return { error: "Working hours data is malformed — please try again." };
+    return { error: t("workingHoursMalformed") };
   }
 
   const result = siteSettingsSchema.safeParse({
@@ -34,7 +37,7 @@ export async function updateSiteSettings(
   });
 
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Please check the form" };
+    return { error: result.error.issues[0]?.message ?? t("checkForm") };
   }
 
   const supabase = await createClient();
@@ -70,7 +73,7 @@ export async function updateSiteSettings(
     : await supabase.from("site_settings").insert(payload);
 
   if (error) {
-    return { error: "Couldn't save settings — please try again." };
+    return { error: t("saveError") };
   }
 
   revalidatePath("/", "layout");

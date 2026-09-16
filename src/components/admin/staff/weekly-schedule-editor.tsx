@@ -1,16 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { WorkingHourEntry } from "@/lib/settings";
-
-const DAY_LABELS = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
 function timeToMinutes(h: number, m: number) {
   return h * 60 + m;
@@ -37,6 +28,8 @@ export function WeeklyScheduleEditor({
   value: WorkingHourEntry[];
   onChange: (updated: WorkingHourEntry[]) => void;
 }) {
+  const t = useTranslations("AdminShell");
+
   function updateDay(weekday: number, patch: Partial<WorkingHourEntry>) {
     onChange(
       value.map((h) => (h.weekday === weekday ? { ...h, ...patch } : h)),
@@ -51,7 +44,7 @@ export function WeeklyScheduleEditor({
           className="flex flex-wrap items-center gap-3 py-2.5"
         >
           <span className="w-24 font-admin-display text-xs font-bold tracking-wider text-admin-ink uppercase">
-            {DAY_LABELS[day.weekday]}
+            {t(`weekdays.${day.weekday}`)}
           </span>
 
           <label className="flex items-center gap-2 text-xs">
@@ -70,7 +63,7 @@ export function WeeklyScheduleEditor({
                   : "border-admin-border text-admin-muted"
               }`}
             >
-              {day.open ? "Open" : "Closed"}
+              {day.open ? t("schedule.open") : t("schedule.closed")}
             </span>
           </label>
 
@@ -86,7 +79,7 @@ export function WeeklyScheduleEditor({
             }}
             className="border border-admin-border bg-admin-bg px-2 py-1 text-xs disabled:opacity-40"
           />
-          <span className="text-xs text-admin-muted">to</span>
+          <span className="text-xs text-admin-muted">{t("schedule.to")}</span>
           <input
             type="time"
             disabled={!day.open}

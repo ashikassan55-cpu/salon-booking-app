@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { SiteSettings, WorkingHourEntry } from "@/lib/settings";
 import { getContrastColor } from "@/lib/color";
 import { WeeklyScheduleEditor } from "@/components/admin/staff/weekly-schedule-editor";
@@ -68,6 +69,7 @@ const inputClass =
   "w-full border border-admin-border bg-admin-bg px-3 py-2 text-sm focus:border-admin-accent focus:outline-none";
 
 export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
+  const t = useTranslations("AdminSettings");
   const [state, formAction, pending] = useActionState(
     updateSiteSettings,
     initialState,
@@ -89,8 +91,12 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
         readOnly
       />
 
-      <SectionCard step="01" title="Business Info" tag="Public Identity">
-        <Field label="Salon Name" htmlFor="name">
+      <SectionCard
+        step="01"
+        title={t("sections.businessInfo.title")}
+        tag={t("sections.businessInfo.tag")}
+      >
+        <Field label={t("fields.salonName")} htmlFor="name">
           <input
             id="name"
             name="name"
@@ -98,7 +104,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
             className={inputClass}
           />
         </Field>
-        <Field label="Tagline" htmlFor="tagline">
+        <Field label={t("fields.tagline")} htmlFor="tagline">
           <input
             id="tagline"
             name="tagline"
@@ -107,7 +113,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
           />
         </Field>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Contact Email" htmlFor="email">
+          <Field label={t("fields.contactEmail")} htmlFor="email">
             <input
               id="email"
               name="email"
@@ -116,7 +122,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
               className={inputClass}
             />
           </Field>
-          <Field label="Phone Number" htmlFor="phone">
+          <Field label={t("fields.phoneNumber")} htmlFor="phone">
             <input
               id="phone"
               name="phone"
@@ -126,9 +132,9 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
           </Field>
         </div>
         <Field
-          label="WhatsApp Number"
+          label={t("fields.whatsappNumber")}
           htmlFor="whatsappNumber"
-          helper="Digits only, no + or leading 0"
+          helper={t("fields.whatsappHelper")}
         >
           <input
             id="whatsappNumber"
@@ -137,7 +143,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
             className={inputClass}
           />
         </Field>
-        <Field label="Physical Studio Address" htmlFor="address">
+        <Field label={t("fields.address")} htmlFor="address">
           <textarea
             id="address"
             name="address"
@@ -148,12 +154,20 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
         </Field>
       </SectionCard>
 
-      <SectionCard step="02" title="Working Hours" tag="Weekly Schedule">
+      <SectionCard
+        step="02"
+        title={t("sections.workingHours.title")}
+        tag={t("sections.workingHours.tag")}
+      >
         <WeeklyScheduleEditor value={workingHours} onChange={setWorkingHours} />
       </SectionCard>
 
-      <SectionCard step="03" title="Social Links" tag="External Channels">
-        <Field label="Instagram Profile" htmlFor="instagramUrl">
+      <SectionCard
+        step="03"
+        title={t("sections.socialLinks.title")}
+        tag={t("sections.socialLinks.tag")}
+      >
+        <Field label={t("fields.instagramProfile")} htmlFor="instagramUrl">
           <input
             id="instagramUrl"
             name="instagramUrl"
@@ -163,7 +177,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
             className={inputClass}
           />
         </Field>
-        <Field label="Facebook Page" htmlFor="facebookUrl">
+        <Field label={t("fields.facebookPage")} htmlFor="facebookUrl">
           <input
             id="facebookUrl"
             name="facebookUrl"
@@ -174,9 +188,9 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
           />
         </Field>
         <Field
-          label="Google Review Link"
+          label={t("fields.googleReviewLink")}
           htmlFor="googleReviewUrl"
-          helper="Shown to customers after a 4-5 star review"
+          helper={t("fields.googleReviewHelper")}
         >
           <input
             id="googleReviewUrl"
@@ -189,16 +203,20 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
         </Field>
       </SectionCard>
 
-      <SectionCard step="04" title="Brand Color" tag="Theme Accent">
+      <SectionCard
+        step="04"
+        title={t("sections.brandColor.title")}
+        tag={t("sections.brandColor.tag")}
+      >
         <Field
-          label="Custom Hex Code"
+          label={t("fields.customHex")}
           htmlFor="accentColor"
-          helper="Applies to buttons and highlights across the public site"
+          helper={t("fields.customHexHelper")}
         >
           <div className="flex items-center gap-2">
             <input
               type="color"
-              aria-label="Pick a color"
+              aria-label={t("fields.pickColor")}
               value={accentColor}
               onChange={(e) => setAccentColor(e.target.value)}
               className="h-9 w-9 shrink-0 cursor-pointer border border-admin-border bg-admin-bg p-0.5"
@@ -216,7 +234,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
 
         <div>
           <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-            Live Preview
+            {t("livePreview")}
           </p>
           <div
             className="mt-2 flex items-center gap-3 border border-admin-border p-4"
@@ -226,7 +244,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
               className="border px-4 py-2 font-admin-display text-xs font-bold tracking-wider uppercase"
               style={{ borderColor: previewForeground, color: previewForeground }}
             >
-              Book Now
+              {t("bookNowPreview")}
             </span>
             <span
               className="text-xs"
@@ -245,7 +263,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
       )}
       {!state.error && saved && (
         <p className="text-sm text-green-700" role="status">
-          Saved — live on the public site.
+          {t("saved")}
         </p>
       )}
 
@@ -255,7 +273,7 @@ export function SiteSettingsForm({ settings }: { settings: SiteSettings }) {
           disabled={pending}
           className="bg-admin-accent px-5 py-2.5 font-admin-display text-xs font-bold tracking-wider text-admin-accent-ink uppercase transition-colors hover:bg-neutral-800 disabled:opacity-50"
         >
-          {pending ? "Saving…" : "Save Changes"}
+          {pending ? t("saving") : t("save")}
         </button>
       </div>
     </form>

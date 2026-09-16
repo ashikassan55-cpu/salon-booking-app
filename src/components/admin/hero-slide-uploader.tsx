@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   compressImageToWebp,
   HERO_IMAGE_COMPRESSION_OPTIONS,
@@ -17,6 +18,7 @@ function formatBytes(bytes: number) {
 
 export function HeroSlideUploader() {
   const router = useRouter();
+  const t = useTranslations("AdminHero.uploader");
   const [stage, setStage] = useState<Stage>("idle");
   const [progress, setProgress] = useState(0);
   const [originalSize, setOriginalSize] = useState<number | null>(null);
@@ -47,7 +49,7 @@ export function HeroSlideUploader() {
       setPreviewUrl(URL.createObjectURL(compressed));
       setStage("ready");
     } catch {
-      setError("Couldn't process that image — try a different file.");
+      setError(t("imageProcessError"));
       setStage("idle");
     }
   }
@@ -88,10 +90,10 @@ export function HeroSlideUploader() {
     <div className="border border-admin-border bg-admin-surface p-5">
       <div className="flex items-center justify-between">
         <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-ink uppercase">
-          ■ Upload Banner Image
+          {t("uploadBanner")}
         </p>
         <p className="font-admin-display text-[10px] font-bold tracking-widest text-admin-muted uppercase">
-          Auto-Optimized
+          {t("autoOptimized")}
         </p>
       </div>
 
@@ -100,12 +102,9 @@ export function HeroSlideUploader() {
         className="mt-4 flex cursor-pointer flex-col items-center gap-1 border border-dashed border-admin-border px-4 py-8 text-center transition-colors hover:border-admin-accent"
       >
         <span className="font-admin-display text-xs font-bold tracking-wider text-admin-ink uppercase">
-          Click to choose a photo
+          {t("clickToChoose")}
         </span>
-        <span className="text-xs text-admin-muted">
-          Recommended size: 1920×1080px (16:9 ratio), max 2MB. Keep focal
-          subjects centered — edges may crop on some screens.
-        </span>
+        <span className="text-xs text-admin-muted">{t("specNote")}</span>
       </label>
       <input
         ref={fileInputRef}
@@ -119,7 +118,7 @@ export function HeroSlideUploader() {
 
       {stage === "compressing" && (
         <p className="mt-3 font-admin-display text-xs font-bold tracking-wide text-admin-muted uppercase">
-          Compressing… {progress}%
+          {t("compressing", { progress })}
         </p>
       )}
 
@@ -128,12 +127,12 @@ export function HeroSlideUploader() {
           {/* eslint-disable-next-line @next/next/no-img-element -- transient client-side blob preview, not a served asset */}
           <img
             src={previewUrl}
-            alt="Compressed preview"
+            alt={t("compressedPreviewAlt")}
             className="h-16 w-16 shrink-0 border border-admin-border object-cover"
           />
           <div className="text-xs">
             <span className="bg-admin-accent px-1.5 py-0.5 font-admin-display font-bold tracking-wider text-admin-accent-ink uppercase">
-              Converted to WebP
+              {t("convertedToWebp")}
             </span>
             <p className="mt-1.5 tabular-nums text-admin-muted">
               {formatBytes(originalSize ?? 0)} &rarr;{" "}
@@ -158,7 +157,7 @@ export function HeroSlideUploader() {
               htmlFor="hero-caption"
               className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
             >
-              Caption (Optional — replaces the tagline while this slide shows)
+              {t("captionLabel")}
             </label>
             <input
               id="hero-caption"
@@ -172,20 +171,20 @@ export function HeroSlideUploader() {
             onClick={handleUpload}
             className="bg-admin-accent px-4 py-2.5 font-admin-display text-xs font-bold tracking-wider text-admin-accent-ink uppercase transition-colors hover:bg-neutral-800"
           >
-            Confirm &amp; Add Slide
+            {t("confirmAdd")}
           </button>
         </div>
       )}
 
       {stage === "uploading" && (
         <p className="mt-3 font-admin-display text-xs font-bold tracking-wide text-admin-muted uppercase">
-          Uploading…
+          {t("uploading")}
         </p>
       )}
 
       {stage === "done" && (
         <p className="mt-3 text-sm text-green-700" role="status">
-          Uploaded — it&apos;s now live in the homepage rotation.
+          {t("done")}
         </p>
       )}
 

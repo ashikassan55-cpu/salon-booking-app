@@ -1,0 +1,40 @@
+{
+  "AdminHero": {
+    "eyebrow": "Homepage Banner",
+    "heading": "Hero Section",
+    "subtitle": "Upload and reorder the rotating banner images shown behind the homepage headline — automatically compressed to WebP.",
+    "currentSlides": "Current Slides ({count})",
+    "loadError": "Couldn't load hero slides: {message}",
+    "emptyState": "No banner slides yet — upload your first one above.",
+    "card": {
+      "moveEarlier": "Move earlier",
+      "moveLater": "Move later",
+      "deleting": "…",
+      "confirmDelete": "Confirm?",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "captionPlaceholder": "Optional caption…",
+      "save": "Save",
+      "saving": "…"
+    },
+    "uploader": {
+      "uploadBanner": "■ Upload Banner Image",
+      "autoOptimized": "Auto-Optimized",
+      "clickToChoose": "Click to choose a photo",
+      "specNote": "Recommended size: 1920×1080px (16:9 ratio), max 2MB. Keep focal subjects centered — edges may crop on some screens.",
+      "imageProcessError": "Couldn't process that image — try a different file.",
+      "compressing": "Compressing… {progress}%",
+      "compressedPreviewAlt": "Compressed preview",
+      "convertedToWebp": "Converted to WebP",
+      "captionLabel": "Caption (Optional — replaces the tagline while this slide shows)",
+      "confirmAdd": "Confirm & Add Slide",
+      "uploading": "Uploading…",
+      "done": "Uploaded — it's now live in the homepage rotation.",
+      "chooseImageError": "Choose an image to upload.",
+      "uploadError": "Upload failed — please try again.",
+      "saveRecordError": "Image uploaded but saving its record failed."
+    },
+    "deleteError": "Couldn't delete this slide — please try again.",
+    "captionSaveError": "Couldn't save the caption — please try again."
+  }
+}

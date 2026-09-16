@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { HeroSlideRow } from "@/lib/supabase/database.types";
 import {
   deleteHeroSlide,
@@ -22,6 +23,7 @@ function HeroSlideCard({
   isLast: boolean;
 }) {
   const router = useRouter();
+  const t = useTranslations("AdminHero.card");
   const updateCaptionForSlide = updateHeroSlideCaption.bind(null, slide.id);
   const [state, formAction, pending] = useActionState(
     updateCaptionForSlide,
@@ -70,13 +72,13 @@ function HeroSlideCard({
           alt={slide.caption ?? ""}
           className="h-full w-full object-cover"
         />
-        <div className="absolute top-2 right-2 flex gap-1">
+        <div className="absolute top-2 end-2 flex gap-1">
           <button
             type="button"
             onClick={() => handleMove("up")}
             disabled={isFirst || moving}
             className="bg-black/60 px-2 py-1 font-admin-display text-[10px] font-bold tracking-wider text-white uppercase transition-colors hover:bg-admin-accent disabled:opacity-30"
-            title="Move earlier"
+            title={t("moveEarlier")}
           >
             ↑
           </button>
@@ -85,7 +87,7 @@ function HeroSlideCard({
             onClick={() => handleMove("down")}
             disabled={isLast || moving}
             className="bg-black/60 px-2 py-1 font-admin-display text-[10px] font-bold tracking-wider text-white uppercase transition-colors hover:bg-admin-accent disabled:opacity-30"
-            title="Move later"
+            title={t("moveLater")}
           >
             ↓
           </button>
@@ -99,7 +101,11 @@ function HeroSlideCard({
                 : "bg-black/60 text-white hover:bg-admin-error"
             }`}
           >
-            {deleting ? "…" : confirmingDelete ? "Confirm?" : "Delete"}
+            {deleting
+              ? t("deleting")
+              : confirmingDelete
+                ? t("confirmDelete")
+                : t("delete")}
           </button>
           {confirmingDelete && !deleting && (
             <button
@@ -107,7 +113,7 @@ function HeroSlideCard({
               onClick={() => setConfirmingDelete(false)}
               className="bg-black/60 px-2 py-1 font-admin-display text-[10px] font-bold tracking-wider text-white uppercase transition-colors hover:bg-white/20"
             >
-              Cancel
+              {t("cancel")}
             </button>
           )}
         </div>
@@ -117,7 +123,7 @@ function HeroSlideCard({
           type="text"
           name="caption"
           defaultValue={slide.caption ?? ""}
-          placeholder="Optional caption…"
+          placeholder={t("captionPlaceholder")}
           className="w-full border border-admin-border px-2 py-1 text-xs focus:border-admin-accent focus:outline-none"
         />
         <button
@@ -125,7 +131,7 @@ function HeroSlideCard({
           disabled={pending}
           className="shrink-0 border border-admin-border px-2 py-1 font-admin-display text-[10px] font-bold tracking-wider text-admin-ink uppercase transition-colors hover:bg-admin-accent hover:text-admin-accent-ink disabled:opacity-50"
         >
-          {pending ? "…" : "Save"}
+          {pending ? t("saving") : t("save")}
         </button>
       </form>
       {state.error && (
@@ -143,10 +149,12 @@ function HeroSlideCard({
 }
 
 export function HeroSlidesGrid({ slides }: { slides: HeroSlideRow[] }) {
+  const t = useTranslations("AdminHero");
+
   if (slides.length === 0) {
     return (
       <p className="border border-dashed border-admin-border p-8 text-center text-sm text-admin-muted">
-        No banner slides yet — upload your first one above.
+        {t("emptyState")}
       </p>
     );
   }

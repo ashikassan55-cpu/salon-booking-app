@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { StaffManager } from "@/components/admin/staff/staff-manager";
 import { createClient } from "@/lib/supabase/server";
 import { getSiteSettings } from "@/lib/settings";
@@ -21,9 +22,10 @@ export default async function AdminStaffPage() {
 
   const error = staffError || staffServicesError || servicesError;
   if (error) {
+    const t = await getTranslations("AdminStaff");
     return (
       <p className="text-sm text-admin-error" role="alert">
-        Couldn&apos;t load staff: {error.message}
+        {t("loadError", { message: error.message })}
       </p>
     );
   }

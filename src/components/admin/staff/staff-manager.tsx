@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { Service, Staff, StaffServicePricing } from "@/lib/types";
 import type { WorkingHourEntry } from "@/lib/settings";
 import {
@@ -27,6 +28,7 @@ export function StaffManager({
   defaultSchedule: WorkingHourEntry[];
 }) {
   const router = useRouter();
+  const t = useTranslations("AdminStaff");
   const [drawer, setDrawer] = useState<DrawerState>({ mode: "closed" });
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
@@ -47,13 +49,13 @@ export function StaffManager({
       <div className="flex items-end justify-between border-b border-admin-border pb-4">
         <div>
           <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-            Staff & Roster
+            {t("eyebrow")}
           </p>
           <h1 className="mt-1 font-admin-display text-4xl font-bold tracking-tight text-admin-ink uppercase">
-            Team
+            {t("heading")}
           </h1>
           <p className="mt-1 font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-            {staff.length} stylist{staff.length === 1 ? "" : "s"}
+            {t("stylistCount", { count: staff.length })}
           </p>
         </div>
         <button
@@ -61,24 +63,24 @@ export function StaffManager({
           onClick={() => setDrawer({ mode: "create" })}
           className="bg-admin-accent px-4 py-2.5 font-admin-display text-xs font-bold tracking-wider text-admin-accent-ink uppercase transition-colors hover:bg-neutral-800"
         >
-          + Add Team Member
+          {t("addMember")}
         </button>
       </div>
 
       <div className="mt-6 overflow-x-auto border border-admin-border bg-admin-surface">
         {staff.length === 0 ? (
           <p className="p-8 text-center text-sm text-admin-muted">
-            No stylists yet — add your first one above.
+            {t("emptyState")}
           </p>
         ) : (
-          <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[720px] border-collapse text-start text-sm">
             <thead>
               <tr className="border-b border-admin-accent bg-admin-bg font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-                <th className="px-4 py-3">Stylist</th>
-                <th className="px-4 py-3">Role</th>
-                <th className="px-4 py-3">Services</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3 text-right">Actions</th>
+                <th className="px-4 py-3">{t("columns.stylist")}</th>
+                <th className="px-4 py-3">{t("columns.role")}</th>
+                <th className="px-4 py-3">{t("columns.services")}</th>
+                <th className="px-4 py-3">{t("columns.status")}</th>
+                <th className="px-4 py-3 text-end">{t("columns.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-admin-border">
@@ -126,10 +128,10 @@ export function StaffManager({
                           : "border-admin-border text-admin-muted"
                       }`}
                     >
-                      {member.isActive ? "Active" : "Inactive"}
+                      {member.isActive ? t("active") : t("inactive")}
                     </span>
                   </td>
-                  <td className="px-4 py-4 text-right align-top whitespace-nowrap">
+                  <td className="px-4 py-4 text-end align-top whitespace-nowrap">
                     <button
                       type="button"
                       onClick={(e) => {
@@ -137,9 +139,9 @@ export function StaffManager({
                         setDrawer({ mode: "edit", staff: member });
                       }}
                       className="p-1.5 text-admin-muted hover:text-admin-ink"
-                      title="Edit Stylist"
+                      title={t("editStylist")}
                     >
-                      Edit
+                      {t("edit")}
                     </button>
                     <button
                       type="button"
@@ -148,14 +150,14 @@ export function StaffManager({
                         handleToggleActive(member);
                       }}
                       disabled={togglingId === member.id}
-                      className="ml-2 p-1.5 text-admin-muted hover:text-admin-error disabled:opacity-50"
-                      title={member.isActive ? "Deactivate" : "Reactivate"}
+                      className="ms-2 p-1.5 text-admin-muted hover:text-admin-error disabled:opacity-50"
+                      title={member.isActive ? t("deactivate") : t("reactivate")}
                     >
                       {togglingId === member.id
-                        ? "…"
+                        ? t("toggling")
                         : member.isActive
-                          ? "Deactivate"
-                          : "Reactivate"}
+                          ? t("deactivate")
+                          : t("reactivate")}
                     </button>
                   </td>
                 </tr>

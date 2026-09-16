@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { Booking, BookingStatus } from "@/lib/types";
 import { formatInSalonTimezone } from "@/lib/timezone";
 import { normalizeUaePhoneForWhatsapp } from "@/lib/phone";
@@ -33,7 +34,13 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-function StatusPill({ status }: { status: BookingStatus }) {
+function StatusPill({
+  status,
+  label,
+}: {
+  status: BookingStatus;
+  label: string;
+}) {
   const isFilled = status === "confirmed" || status === "completed";
   const isCancelled = status === "cancelled";
 
@@ -47,7 +54,7 @@ function StatusPill({ status }: { status: BookingStatus }) {
             : "border-admin-border text-admin-ink"
       }`}
     >
-      {status}
+      {label}
     </span>
   );
 }
@@ -56,12 +63,20 @@ function reviewRequestUrl({
   booking,
   salonName,
   siteUrl,
+  t,
 }: {
   booking: Booking;
   salonName: string;
   siteUrl: string;
+  t: Awaited<ReturnType<typeof getTranslations<"AdminBookings">>>;
 }) {
-  const message = `Hi ${booking.customer_name}! Thank you for visiting ${salonName} for your ${booking.service_name_snapshot}. If you have 10 seconds, please rate your experience with ${booking.staff_name_snapshot ?? "us"}: ${siteUrl}/rate/${booking.review_token}`;
+  const message = t("reviewMessage", {
+    name: booking.customer_name,
+    salonName,
+    service: booking.service_name_snapshot,
+    stylist: booking.staff_name_snapshot ?? t("ourTeam"),
+    url: `${siteUrl}/rate/${booking.review_token}`,
+  });
   const phone = normalizeUaePhoneForWhatsapp(booking.customer_phone);
   return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
@@ -70,10 +85,12 @@ function ReviewCell({
   booking,
   salonName,
   siteUrl,
+  t,
 }: {
   booking: Booking;
   salonName: string;
   siteUrl: string;
+  t: Awaited<ReturnType<typeof getTranslations<"AdminBookings">>>;
 }) {
   if (booking.status !== "completed") {
     return <span className="text-xs text-admin-muted">—</span>;
@@ -82,24 +99,24 @@ function ReviewCell({
   if (booking.reviewed_at) {
     return (
       <span className="inline-block border border-admin-accent bg-admin-accent px-2 py-0.5 font-admin-display text-[10px] font-bold tracking-wider text-admin-accent-ink uppercase">
-        Reviewed
+        {t("reviewed")}
       </span>
     );
   }
 
   return (
     <a
-      href={reviewRequestUrl({ booking, salonName, siteUrl })}
+      href={reviewRequestUrl({ booking, salonName, siteUrl, t })}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-block border border-admin-border px-3 py-1 font-admin-display text-[11px] font-bold tracking-wider uppercase transition-colors hover:bg-admin-accent hover:text-admin-accent-ink"
     >
-      Send Review
+      {t("sendReview")}
     </a>
   );
 }
 
-export function BookingsTable({
+export async function BookingsTable({
   bookings,
   filters,
   salonName,
@@ -110,6 +127,8 @@ export function BookingsTable({
   salonName: string;
   siteUrl: string;
 }) {
+  const t = await getTranslations("AdminBookings");
+
   return (
     <div>
       <form className="flex flex-wrap items-end gap-4" method="get">
@@ -118,7 +137,7 @@ export function BookingsTable({
             htmlFor="status"
             className="block font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
           >
-            Status
+            {t("filters.status")}
           </label>
           <select
             id="status"
@@ -126,10 +145,10 @@ export function BookingsTable({
             defaultValue={filters.status ?? ""}
             className="mt-1 border border-admin-border bg-admin-surface px-3 py-2 text-sm focus:border-admin-accent focus:outline-none"
           >
-            <option value="">All</option>
+            <option value="">{t("filters.all")}</option>
             {STATUS_OPTIONS.map((status) => (
               <option key={status} value={status}>
-                {status[0].toUpperCase() + status.slice(1)}
+                {t(`status.${status}`)}
               </option>
             ))}
           </select>
@@ -140,7 +159,7 @@ export function BookingsTable({
             htmlFor="date"
             className="block font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
           >
-            Date
+            {t("filters.date")}
           </label>
           <input
             id="date"
@@ -155,14 +174,14 @@ export function BookingsTable({
           type="submit"
           className="bg-admin-accent px-4 py-2 font-admin-display text-xs font-bold tracking-wider text-admin-accent-ink uppercase"
         >
-          Filter
+          {t("filters.filter")}
         </button>
         {(filters.status || filters.date) && (
           <a
             href="/admin"
             className="text-xs text-admin-muted underline underline-offset-2"
           >
-            Clear filters
+            {t("filters.clear")}
           </a>
         )}
       </form>
@@ -170,29 +189,27 @@ export function BookingsTable({
       <div className="mt-6 border border-admin-border bg-admin-surface">
         <div className="flex items-center justify-between border-b border-admin-border px-4 py-2">
           <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-ink uppercase">
-            Bookings
+            {t("tableHeading")}
           </p>
           <span className="border border-admin-border px-2 py-0.5 font-admin-display text-[10px] font-bold tracking-wider text-admin-muted uppercase">
-            {bookings.length} showing
+            {t("showingCount", { count: bookings.length })}
           </span>
         </div>
 
         <div className="overflow-x-auto">
           {bookings.length === 0 ? (
-            <p className="p-8 text-sm text-admin-muted">
-              No bookings match these filters.
-            </p>
+            <p className="p-8 text-sm text-admin-muted">{t("noMatch")}</p>
           ) : (
             <table className="w-full min-w-[760px] border-collapse text-sm">
               <thead>
-                <tr className="border-b border-admin-accent bg-admin-bg text-left font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-                  <th className="px-4 py-3">Customer</th>
-                  <th className="px-4 py-3">Service</th>
-                  <th className="px-4 py-3">Stylist</th>
-                  <th className="px-4 py-3">Date &amp; Time</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3">Review</th>
-                  <th className="px-4 py-3">Actions</th>
+                <tr className="border-b border-admin-accent bg-admin-bg text-start font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
+                  <th className="px-4 py-3">{t("columns.customer")}</th>
+                  <th className="px-4 py-3">{t("columns.service")}</th>
+                  <th className="px-4 py-3">{t("columns.stylist")}</th>
+                  <th className="px-4 py-3">{t("columns.dateTime")}</th>
+                  <th className="px-4 py-3">{t("columns.status")}</th>
+                  <th className="px-4 py-3">{t("columns.review")}</th>
+                  <th className="px-4 py-3">{t("columns.actions")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-admin-border">
@@ -229,13 +246,17 @@ export function BookingsTable({
                       {formatDate(booking.service_date)}
                     </td>
                     <td className="px-4 py-3 align-top">
-                      <StatusPill status={booking.status} />
+                      <StatusPill
+                        status={booking.status}
+                        label={t(`status.${booking.status}`)}
+                      />
                     </td>
                     <td className="px-4 py-3 align-top">
                       <ReviewCell
                         booking={booking}
                         salonName={salonName}
                         siteUrl={siteUrl}
+                        t={t}
                       />
                     </td>
                     <td className="px-4 py-3 align-top">

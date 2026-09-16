@@ -1,0 +1,11 @@
+{
+  "AdminLogin": {
+    "heading": "Admin Login",
+    "email": "Email",
+    "password": "Password",
+    "signingIn": "Signing in...",
+    "signIn": "Sign in",
+    "invalidInput": "Invalid input",
+    "invalidCredentials": "Invalid email or password"
+  }
+}

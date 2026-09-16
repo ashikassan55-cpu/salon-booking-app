@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { staffSchema } from "@/lib/validation/staff";
 import { staffServicePricingListSchema } from "@/lib/validation/staff-service";
@@ -10,6 +11,7 @@ export type StaffFormState = { error: string | null };
 async function uploadStaffPhoto(
   supabase: Awaited<ReturnType<typeof createClient>>,
   file: File,
+  t: Awaited<ReturnType<typeof getTranslations<"AdminStaff">>>,
 ): Promise<{ url?: string; error?: string }> {
   // Staff headshots reuse the existing 'gallery' bucket under a staff/
   // prefix — same convention services/actions.ts already uses for its own
@@ -20,7 +22,7 @@ async function uploadStaffPhoto(
     .upload(path, file, { contentType: file.type });
 
   if (uploadError) {
-    return { error: "Photo upload failed — please try again." };
+    return { error: t("photoUploadError") };
   }
 
   const { data } = supabase.storage.from("gallery").getPublicUrl(path);
@@ -60,12 +62,14 @@ async function replaceStaffServices(
 }
 
 export async function createStaff(formData: FormData): Promise<StaffFormState> {
+  const t = await getTranslations("AdminStaff");
+
   const scheduleRaw = formData.get("schedule");
   let schedule: unknown;
   try {
     schedule = typeof scheduleRaw === "string" ? JSON.parse(scheduleRaw) : [];
   } catch {
-    return { error: "Schedule data is malformed — please try again." };
+    return { error: t("scheduleMalformed") };
   }
 
   const result = staffSchema.safeParse({
@@ -75,12 +79,12 @@ export async function createStaff(formData: FormData): Promise<StaffFormState> {
   });
 
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Please check the form" };
+    return { error: result.error.issues[0]?.message ?? t("checkForm") };
   }
 
   const pricingResult = parsePricing(formData);
   if (!pricingResult || !pricingResult.success) {
-    return { error: "Pricing data is malformed — please try again." };
+    return { error: t("pricingMalformed") };
   }
 
   const supabase = await createClient();
@@ -88,7 +92,7 @@ export async function createStaff(formData: FormData): Promise<StaffFormState> {
   let photoUrl: string | undefined;
   const photoFile = formData.get("photo");
   if (photoFile instanceof File && photoFile.size > 0) {
-    const uploaded = await uploadStaffPhoto(supabase, photoFile);
+    const uploaded = await uploadStaffPhoto(supabase, photoFile, t);
     if (uploaded.error) return { error: uploaded.error };
     photoUrl = uploaded.url;
   }
@@ -105,7 +109,7 @@ export async function createStaff(formData: FormData): Promise<StaffFormState> {
     .single();
 
   if (error || !inserted) {
-    return { error: "Couldn't create the stylist — please try again." };
+    return { error: t("createError") };
   }
 
   const pricingError = await replaceStaffServices(
@@ -114,9 +118,7 @@ export async function createStaff(formData: FormData): Promise<StaffFormState> {
     pricingResult.data,
   );
   if (pricingError) {
-    return {
-      error: "Stylist saved, but pricing couldn't be saved — please edit and try again.",
-    };
+    return { error: t("pricingSaveError") };
   }
 
   revalidatePath("/admin/staff");
@@ -128,12 +130,14 @@ export async function updateStaff(
   id: string,
   formData: FormData,
 ): Promise<StaffFormState> {
+  const t = await getTranslations("AdminStaff");
+
   const scheduleRaw = formData.get("schedule");
   let schedule: unknown;
   try {
     schedule = typeof scheduleRaw === "string" ? JSON.parse(scheduleRaw) : [];
   } catch {
-    return { error: "Schedule data is malformed — please try again." };
+    return { error: t("scheduleMalformed") };
   }
 
   const result = staffSchema.safeParse({
@@ -143,12 +147,12 @@ export async function updateStaff(
   });
 
   if (!result.success) {
-    return { error: result.error.issues[0]?.message ?? "Please check the form" };
+    return { error: result.error.issues[0]?.message ?? t("checkForm") };
   }
 
   const pricingResult = parsePricing(formData);
   if (!pricingResult || !pricingResult.success) {
-    return { error: "Pricing data is malformed — please try again." };
+    return { error: t("pricingMalformed") };
   }
 
   const supabase = await createClient();
@@ -156,7 +160,7 @@ export async function updateStaff(
   let photoUrl: string | undefined;
   const photoFile = formData.get("photo");
   if (photoFile instanceof File && photoFile.size > 0) {
-    const uploaded = await uploadStaffPhoto(supabase, photoFile);
+    const uploaded = await uploadStaffPhoto(supabase, photoFile, t);
     if (uploaded.error) return { error: uploaded.error };
     photoUrl = uploaded.url;
   }
@@ -172,14 +176,12 @@ export async function updateStaff(
     .eq("id", id);
 
   if (error) {
-    return { error: "Couldn't save the stylist — please try again." };
+    return { error: t("updateError") };
   }
 
   const pricingError = await replaceStaffServices(supabase, id, pricingResult.data);
   if (pricingError) {
-    return {
-      error: "Stylist saved, but pricing couldn't be saved — please edit and try again.",
-    };
+    return { error: t("pricingSaveError") };
   }
 
   revalidatePath("/admin/staff");

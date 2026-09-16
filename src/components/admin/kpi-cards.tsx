@@ -1,13 +1,7 @@
+import { getTranslations } from "next-intl/server";
 import type { BookingKpis } from "@/lib/admin/analytics";
 import type { BookingStatus } from "@/lib/types";
 import { formatCurrency } from "@/lib/currency";
-
-const STATUS_LABELS: Record<BookingStatus, string> = {
-  pending: "Pending",
-  confirmed: "Confirmed",
-  completed: "Completed",
-  cancelled: "Cancelled",
-};
 
 function CalendarIcon() {
   return (
@@ -73,7 +67,8 @@ function CardShell({
   );
 }
 
-export function KpiCards({ kpis }: { kpis: BookingKpis }) {
+export async function KpiCards({ kpis }: { kpis: BookingKpis }) {
+  const t = await getTranslations("AdminBookings");
   const totalForBreakdown = Object.values(kpis.statusBreakdown).reduce(
     (a, b) => a + b,
     0,
@@ -82,37 +77,39 @@ export function KpiCards({ kpis }: { kpis: BookingKpis }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <CardShell icon={<CalendarIcon />} label="Bookings Today">
+        <CardShell icon={<CalendarIcon />} label={t("kpi.bookingsToday")}>
           <p className="mt-2 text-3xl font-bold tabular-nums">
             {kpis.totalToday}
           </p>
         </CardShell>
-        <CardShell icon={<CalendarIcon />} label="Bookings This Week">
+        <CardShell icon={<CalendarIcon />} label={t("kpi.bookingsThisWeek")}>
           <p className="mt-2 text-3xl font-bold tabular-nums">
             {kpis.totalThisWeek}
           </p>
         </CardShell>
-        <CardShell icon={<CalendarIcon />} label="Bookings This Month">
+        <CardShell icon={<CalendarIcon />} label={t("kpi.bookingsThisMonth")}>
           <p className="mt-2 text-3xl font-bold tabular-nums">
             {kpis.totalThisMonth}
           </p>
         </CardShell>
-        <CardShell icon={<RevenueIcon />} label="Estimated Revenue">
+        <CardShell icon={<RevenueIcon />} label={t("kpi.estimatedRevenue")}>
           <p className="mt-2 text-3xl font-bold tabular-nums">
             {formatCurrency(kpis.estimatedRevenue)}
           </p>
           <p className="mt-1 text-xs text-admin-muted">
             {kpis.averageTicket > 0
-              ? `Avg ticket: ${formatCurrency(kpis.averageTicket)}`
-              : "Confirmed + completed only"}
+              ? t("kpi.avgTicket", { price: formatCurrency(kpis.averageTicket) })
+              : t("kpi.confirmedCompletedOnly")}
           </p>
         </CardShell>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <CardShell icon={<ListIcon />} label="Popular Services">
+        <CardShell icon={<ListIcon />} label={t("kpi.popularServices")}>
           {kpis.popularServices.length === 0 ? (
-            <p className="mt-3 text-sm text-admin-muted">No bookings yet.</p>
+            <p className="mt-3 text-sm text-admin-muted">
+              {t("kpi.noBookingsYet")}
+            </p>
           ) : (
             <ol className="mt-3 space-y-2">
               {kpis.popularServices.map((service, i) => (
@@ -132,14 +129,14 @@ export function KpiCards({ kpis }: { kpis: BookingKpis }) {
           )}
         </CardShell>
 
-        <CardShell icon={<PieIcon />} label="Booking Status Breakdown">
+        <CardShell icon={<PieIcon />} label={t("kpi.statusBreakdown")}>
           <ul className="mt-3 space-y-2">
             {Object.entries(kpis.statusBreakdown).map(([status, count]) => (
               <li
                 key={status}
                 className="flex items-center justify-between text-sm"
               >
-                <span>{STATUS_LABELS[status as BookingStatus] ?? status}</span>
+                <span>{t(`status.${status as BookingStatus}`)}</span>
                 <span className="font-medium tabular-nums text-admin-muted">
                   {count}
                 </span>
@@ -156,7 +153,7 @@ export function KpiCards({ kpis }: { kpis: BookingKpis }) {
                   return (
                     <div
                       key={status}
-                      title={`${STATUS_LABELS[status]}: ${count}`}
+                      title={`${t(`status.${status}`)}: ${count}`}
                       className={
                         status === "cancelled"
                           ? "bg-admin-border"

@@ -1,0 +1,37 @@
+{
+  "AdminSettings": {
+    "eyebrow": "System Config",
+    "heading": "Site Settings",
+    "subtitle": "Manage your public storefront profile, weekly hours, social links, and brand accent color.",
+    "sections": {
+      "businessInfo": { "title": "Business Info", "tag": "Public Identity" },
+      "workingHours": { "title": "Working Hours", "tag": "Weekly Schedule" },
+      "socialLinks": { "title": "Social Links", "tag": "External Channels" },
+      "brandColor": { "title": "Brand Color", "tag": "Theme Accent" }
+    },
+    "fields": {
+      "salonName": "Salon Name",
+      "tagline": "Tagline",
+      "contactEmail": "Contact Email",
+      "phoneNumber": "Phone Number",
+      "whatsappNumber": "WhatsApp Number",
+      "whatsappHelper": "Digits only, no + or leading 0",
+      "address": "Physical Studio Address",
+      "instagramProfile": "Instagram Profile",
+      "facebookPage": "Facebook Page",
+      "googleReviewLink": "Google Review Link",
+      "googleReviewHelper": "Shown to customers after a 4-5 star review",
+      "customHex": "Custom Hex Code",
+      "customHexHelper": "Applies to buttons and highlights across the public site",
+      "pickColor": "Pick a color"
+    },
+    "livePreview": "Live Preview",
+    "bookNowPreview": "Book Now",
+    "saved": "Saved — live on the public site.",
+    "save": "Save Changes",
+    "saving": "Saving…",
+    "checkForm": "Please check the form",
+    "workingHoursMalformed": "Working hours data is malformed — please try again.",
+    "saveError": "Couldn't save settings — please try again."
+  }
+}

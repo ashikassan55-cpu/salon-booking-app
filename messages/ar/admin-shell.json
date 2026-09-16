@@ -14,6 +14,20 @@
     "openMenu": "فتح القائمة",
     "closeMenu": "إغلاق",
     "languageEnglish": "EN",
-    "languageArabic": "AR"
+    "languageArabic": "AR",
+    "weekdays": {
+      "0": "الأحد",
+      "1": "الاثنين",
+      "2": "الثلاثاء",
+      "3": "الأربعاء",
+      "4": "الخميس",
+      "5": "الجمعة",
+      "6": "السبت"
+    },
+    "schedule": {
+      "open": "مفتوح",
+      "closed": "مغلق",
+      "to": "إلى"
+    }
   }
 }

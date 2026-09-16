@@ -1,0 +1,36 @@
+{
+  "AdminGallery": {
+    "eyebrow": "المحفظة والوسائط",
+    "heading": "المعرض",
+    "subtitle": "ارفع صوراً للمعرض العام — تُضغط تلقائياً بصيغة WebP، وتُعاد بأبعادها، وتُعرض مباشرة على الصفحة الرئيسية.",
+    "currentGallery": "المعرض الحالي ({count})",
+    "loadError": "تعذر تحميل صور المعرض: {message}",
+    "emptyState": "لا توجد صور بعد — ارفع أول صورة من الأعلى.",
+    "card": {
+      "deleteConfirm": "هل تريد حذف هذه الصورة؟ لا يمكن التراجع عن هذا الإجراء.",
+      "deleting": "…",
+      "delete": "حذف",
+      "captionPlaceholder": "أضف تعليقاً…",
+      "save": "حفظ",
+      "saving": "…"
+    },
+    "uploader": {
+      "pipelineLabel": "■ خط الاستيراد // رفع صورة",
+      "autoOptimized": "محسّنة تلقائياً",
+      "clickToChoose": "انقر لاختيار صورة",
+      "specNote": "يتم التحويل إلى WebP، وتغيير الحجم إلى 1200 بكسل كحد أقصى، بجودة 85%",
+      "imageProcessError": "تعذرت معالجة هذه الصورة — جرّب ملفاً آخر.",
+      "compressing": "جارٍ الضغط… {progress}%",
+      "compressedPreviewAlt": "معاينة مضغوطة",
+      "convertedToWebp": "تم التحويل إلى WebP",
+      "captionLabel": "تعليق (اختياري)",
+      "confirmAdd": "تأكيد وإضافة إلى المعرض",
+      "uploading": "جارٍ الرفع…",
+      "done": "تم الرفع — أصبحت الصورة مباشرة الآن في المعرض العام.",
+      "chooseImageError": "اختر صورة لرفعها.",
+      "uploadError": "فشل الرفع — يرجى المحاولة مرة أخرى.",
+      "saveRecordError": "تم رفع الصورة لكن تعذر حفظ سجلها."
+    },
+    "captionSaveError": "تعذر حفظ التعليق — يرجى المحاولة مرة أخرى."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "AdminStaff": {
+    "eyebrow": "Staff & Roster",
+    "heading": "Team",
+    "stylistCount": "{count, plural, one {# stylist} other {# stylists}}",
+    "addMember": "+ Add Team Member",
+    "emptyState": "No stylists yet — add your first one above.",
+    "loadError": "Couldn't load staff: {message}",
+    "columns": {
+      "stylist": "Stylist",
+      "role": "Role",
+      "services": "Services",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "active": "Active",
+    "inactive": "Inactive",
+    "editStylist": "Edit Stylist",
+    "edit": "Edit",
+    "deactivate": "Deactivate",
+    "reactivate": "Reactivate",
+    "toggling": "…",
+    "drawer": {
+      "inspectorLabel": "Drawer Inspector",
+      "newMemberLabel": "New Team Member",
+      "editTitle": "Edit Team Member // {name}",
+      "addTitle": "Add Team Member",
+      "close": "Close",
+      "photoPlaceholder": "Photo",
+      "previewAlt": "Preview",
+      "compressing": "Compressing…",
+      "replacePhoto": "Replace photo",
+      "uploadPhoto": "Upload photo",
+      "photoError": "Couldn't process that photo — try a different file.",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "e.g. Elena Rostova",
+      "roleLabel": "Role / Title",
+      "rolePlaceholder": "e.g. Master Colorist & Artistic Director",
+      "weeklySchedule": "Weekly Schedule",
+      "servicesPricing": "Services & Pricing",
+      "cancel": "Cancel",
+      "save": "Save Member",
+      "saving": "Saving…"
+    },
+    "pricing": {
+      "noServices": "No services exist yet — add one under Services first.",
+      "basePrice": "(base {price})"
+    },
+    "checkForm": "Please check the form",
+    "scheduleMalformed": "Schedule data is malformed — please try again.",
+    "pricingMalformed": "Pricing data is malformed — please try again.",
+    "photoUploadError": "Photo upload failed — please try again.",
+    "createError": "Couldn't create the stylist — please try again.",
+    "updateError": "Couldn't save the stylist — please try again.",
+    "pricingSaveError": "Stylist saved, but pricing couldn't be saved — please edit and try again."
+  }
+}

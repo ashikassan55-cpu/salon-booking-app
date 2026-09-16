@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 
 export type UploadState = { error: string | null };
@@ -11,11 +12,13 @@ export type UploadState = { error: string | null };
  * same pattern as uploadGalleryImage.
  */
 export async function uploadHeroSlide(formData: FormData): Promise<UploadState> {
+  const t = await getTranslations("AdminHero.uploader");
+
   const file = formData.get("file");
   const captionValue = formData.get("caption");
 
   if (!(file instanceof File) || file.size === 0) {
-    return { error: "Choose an image to upload." };
+    return { error: t("chooseImageError") };
   }
 
   const supabase = await createClient();
@@ -28,7 +31,7 @@ export async function uploadHeroSlide(formData: FormData): Promise<UploadState> 
     .upload(path, file, { contentType: file.type });
 
   if (uploadError) {
-    return { error: "Upload failed — please try again." };
+    return { error: t("uploadError") };
   }
 
   const { data: publicUrlData } = supabase.storage
@@ -55,7 +58,7 @@ export async function uploadHeroSlide(formData: FormData): Promise<UploadState> 
   });
 
   if (insertError) {
-    return { error: "Image uploaded but saving its record failed." };
+    return { error: t("saveRecordError") };
   }
 
   revalidatePath("/admin/hero");
@@ -91,7 +94,8 @@ export async function deleteHeroSlide(
   const { error } = await supabase.from("hero_slides").delete().eq("id", id);
 
   if (error) {
-    return { error: "Couldn't delete this slide — please try again." };
+    const t = await getTranslations("AdminHero");
+    return { error: t("deleteError") };
   }
 
   revalidatePath("/admin/hero");
@@ -119,7 +123,8 @@ export async function updateHeroSlideCaption(
     .eq("id", id);
 
   if (error) {
-    return { error: "Couldn't save the caption — please try again." };
+    const t = await getTranslations("AdminHero");
+    return { error: t("captionSaveError") };
   }
 
   revalidatePath("/admin/hero");

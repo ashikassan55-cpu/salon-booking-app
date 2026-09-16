@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Service, Staff, StaffServicePricing } from "@/lib/types";
 import type { WorkingHourEntry } from "@/lib/settings";
 import {
@@ -28,6 +29,7 @@ export function StaffDrawer({
   onClose,
   onSaved,
 }: StaffDrawerProps) {
+  const t = useTranslations("AdminStaff.drawer");
   const formRef = useRef<HTMLFormElement>(null);
   const isEdit = !!staff;
 
@@ -64,7 +66,7 @@ export function StaffDrawer({
         previewUrl: URL.createObjectURL(compressed),
       });
     } catch {
-      setError("Couldn't process that photo — try a different file.");
+      setError(t("photoError"));
       setPhotoState({ compressing: false, file: null, previewUrl: null });
     }
   }
@@ -101,23 +103,25 @@ export function StaffDrawer({
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
 
-      <div className="relative flex h-full w-full max-w-md flex-col border-l border-admin-accent bg-admin-surface">
+      <div className="relative flex h-full w-full max-w-md flex-col border-s border-admin-accent bg-admin-surface">
         <div className="flex items-center justify-between border-b border-admin-border p-4">
           <div>
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 bg-admin-accent" />
               <span className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-                {isEdit ? "Drawer Inspector" : "New Team Member"}
+                {isEdit ? t("inspectorLabel") : t("newMemberLabel")}
               </span>
             </div>
             <p className="mt-0.5 font-admin-display text-sm font-bold text-admin-ink uppercase">
-              {isEdit ? `Edit Team Member // ${staff.name}` : "Add Team Member"}
+              {isEdit
+                ? t("editTitle", { name: staff.name })
+                : t("addTitle")}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t("close")}
             className="p-1 text-admin-muted hover:text-admin-ink"
           >
             ✕
@@ -133,22 +137,22 @@ export function StaffDrawer({
               // eslint-disable-next-line @next/next/no-img-element -- preview only
               <img
                 src={photoState.previewUrl ?? staff?.photoUrl ?? ""}
-                alt="Preview"
+                alt={t("previewAlt")}
                 className="h-20 w-20 rounded-full border border-admin-border object-cover"
               />
             ) : (
               <div className="flex h-20 w-20 items-center justify-center rounded-full border border-dashed border-admin-border text-admin-muted">
-                Photo
+                {t("photoPlaceholder")}
               </div>
             )}
             {photoState.compressing && (
-              <p className="text-xs text-admin-muted">Compressing…</p>
+              <p className="text-xs text-admin-muted">{t("compressing")}</p>
             )}
             <label
               htmlFor="photo"
               className="cursor-pointer border border-dashed border-admin-border px-3 py-1.5 text-xs text-admin-muted transition-colors hover:border-admin-accent"
             >
-              {staff?.photoUrl ? "Replace photo" : "Upload photo"}
+              {staff?.photoUrl ? t("replacePhoto") : t("uploadPhoto")}
             </label>
             <input
               id="photo"
@@ -165,13 +169,13 @@ export function StaffDrawer({
               htmlFor="name"
               className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
             >
-              Full Name
+              {t("fullNameLabel")}
             </label>
             <input
               id="name"
               name="name"
               defaultValue={staff?.name ?? ""}
-              placeholder="e.g. Elena Rostova"
+              placeholder={t("fullNamePlaceholder")}
               className="border border-admin-border px-3 py-2 text-sm focus:border-admin-accent focus:outline-none"
             />
           </div>
@@ -181,27 +185,27 @@ export function StaffDrawer({
               htmlFor="role"
               className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase"
             >
-              Role / Title
+              {t("roleLabel")}
             </label>
             <input
               id="role"
               name="role"
               defaultValue={staff?.role ?? ""}
-              placeholder="e.g. Master Colorist & Artistic Director"
+              placeholder={t("rolePlaceholder")}
               className="border border-admin-border px-3 py-2 text-sm focus:border-admin-accent focus:outline-none"
             />
           </div>
 
           <div className="flex flex-col gap-1.5 border-t border-admin-border pt-3">
             <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-              Weekly Schedule
+              {t("weeklySchedule")}
             </p>
             <WeeklyScheduleEditor value={schedule} onChange={setSchedule} />
           </div>
 
           <div className="flex flex-col gap-1.5 border-t border-admin-border pt-3">
             <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-              Services &amp; Pricing
+              {t("servicesPricing")}
             </p>
             <ServicePricingPicker
               services={services}
@@ -223,7 +227,7 @@ export function StaffDrawer({
             onClick={onClose}
             className="flex-1 border border-admin-border bg-admin-surface py-2.5 font-admin-display text-xs font-bold tracking-wider text-admin-ink uppercase transition-colors hover:bg-admin-bg"
           >
-            Cancel
+            {t("cancel")}
           </button>
           <button
             type="button"
@@ -231,7 +235,7 @@ export function StaffDrawer({
             disabled={saving || photoState.compressing}
             className="flex-1 bg-admin-accent py-2.5 font-admin-display text-xs font-bold tracking-wider text-admin-accent-ink uppercase transition-colors hover:bg-neutral-800 disabled:opacity-50"
           >
-            {saving ? "Saving…" : "Save Member"}
+            {saving ? t("saving") : t("save")}
           </button>
         </div>
       </div>

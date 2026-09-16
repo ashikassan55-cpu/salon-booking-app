@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 
 export type UploadState = { error: string | null };
@@ -12,11 +13,13 @@ export type UploadState = { error: string | null };
 export async function uploadGalleryImage(
   formData: FormData,
 ): Promise<UploadState> {
+  const t = await getTranslations("AdminGallery.uploader");
+
   const file = formData.get("file");
   const captionValue = formData.get("caption");
 
   if (!(file instanceof File) || file.size === 0) {
-    return { error: "Choose an image to upload." };
+    return { error: t("chooseImageError") };
   }
 
   const supabase = await createClient();
@@ -27,7 +30,7 @@ export async function uploadGalleryImage(
     .upload(path, file, { contentType: file.type });
 
   if (uploadError) {
-    return { error: "Upload failed — please try again." };
+    return { error: t("uploadError") };
   }
 
   const { data: publicUrlData } = supabase.storage
@@ -45,7 +48,7 @@ export async function uploadGalleryImage(
   });
 
   if (insertError) {
-    return { error: "Image uploaded but saving its record failed." };
+    return { error: t("saveRecordError") };
   }
 
   revalidatePath("/admin/gallery");
@@ -98,7 +101,8 @@ export async function updateGalleryCaption(
     .eq("id", id);
 
   if (error) {
-    return { error: "Couldn't save the caption — please try again." };
+    const t = await getTranslations("AdminGallery");
+    return { error: t("captionSaveError") };
   }
 
   revalidatePath("/admin/gallery");

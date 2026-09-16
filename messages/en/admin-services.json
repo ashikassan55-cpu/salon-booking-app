@@ -1,0 +1,51 @@
+{
+  "AdminServices": {
+    "eyebrow": "Catalog Management",
+    "heading": "Services",
+    "activeCount": "{count, plural, one {# active salon service} other {# active salon services}}",
+    "addService": "+ Add Service",
+    "emptyState": "No services yet — add your first one above.",
+    "loadError": "Couldn't load services: {message}",
+    "columns": {
+      "name": "Name",
+      "price": "Price",
+      "duration": "Duration",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "durationMinutes": "{minutes} min",
+    "editService": "Edit Service",
+    "edit": "Edit",
+    "deleteService": "Delete Service",
+    "delete": "Delete",
+    "deleting": "…",
+    "deleteConfirm": "Delete this service from the catalog?",
+    "drawer": {
+      "inspectorLabel": "Drawer Inspector",
+      "newItemLabel": "New Catalog Item",
+      "editTitle": "Edit Service // {name}",
+      "addTitle": "Add New Service",
+      "close": "Close",
+      "nameLabel": "Service Name",
+      "namePlaceholder": "e.g. Signature Haircut",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "What's included in this service...",
+      "priceLabel": "Price",
+      "durationLabel": "Duration (min)",
+      "imageLabel": "Service Image (Optional)",
+      "autoOptimized": "Auto-Optimized",
+      "convertedToWebp": "Converted to WebP",
+      "compressing": "Compressing…",
+      "previewAlt": "Preview",
+      "dragDrop": "Drag & drop new photo or replace file",
+      "imageError": "Couldn't process that image — try a different file.",
+      "cancel": "Cancel",
+      "save": "Save Service",
+      "saving": "Saving…"
+    },
+    "checkForm": "Please check the form",
+    "imageUploadError": "Image upload failed — please try again.",
+    "createError": "Couldn't create the service — please try again.",
+    "updateError": "Couldn't save the service — please try again."
+  }
+}

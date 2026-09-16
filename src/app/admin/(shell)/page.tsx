@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { KpiCards } from "@/components/admin/kpi-cards";
 import { BookingsTable } from "@/components/admin/bookings-table";
 import { computeBookingKpis } from "@/lib/admin/analytics";
@@ -16,6 +17,7 @@ export default async function AdminDashboardPage({
   const supabase = await createClient();
   const settings = await getSiteSettings();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const t = await getTranslations("AdminBookings");
 
   const { data: bookings, error } = await supabase
     .from("bookings")
@@ -38,18 +40,18 @@ export default async function AdminDashboardPage({
   return (
     <div>
       <p className="font-admin-display text-[11px] font-bold tracking-widest text-admin-muted uppercase">
-        Overview // Real-Time Activity
+        {t("eyebrow")}
       </p>
       <h1 className="mt-1 font-admin-display text-4xl font-bold tracking-tight text-admin-ink uppercase">
-        Dashboard
+        {t("heading")}
       </h1>
       <p className="mt-2 max-w-xl text-sm text-admin-muted">
-        Bookings, revenue, and status at a glance.
+        {t("subtitle")}
       </p>
 
       {error ? (
         <p className="mt-6 text-sm text-admin-error" role="alert">
-          Couldn&apos;t load bookings: {error.message}
+          {t("loadError", { message: error.message })}
         </p>
       ) : (
         <>
@@ -59,7 +61,7 @@ export default async function AdminDashboardPage({
 
           <div className="mt-10">
             <h2 className="font-admin-display text-lg font-bold tracking-wide text-admin-ink uppercase">
-              Bookings
+              {t("tableHeading")}
             </h2>
             <div className="mt-4">
               <BookingsTable

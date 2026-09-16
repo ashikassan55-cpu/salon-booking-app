@@ -68,6 +68,8 @@
  */
 [dir="rtl"] {
   --font-sans: var(--font-noto-arabic);
+  --font-admin-body: var(--font-ibm-plex-arabic);
+  --font-admin-display: var(--font-cairo);
 }
 
 body {

@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { GalleryItem } from "@/lib/types";
 import {
   deleteGalleryImage,
@@ -13,6 +14,7 @@ const initialCaptionState: CaptionState = { error: null };
 
 function GalleryCard({ item }: { item: GalleryItem }) {
   const router = useRouter();
+  const t = useTranslations("AdminGallery.card");
   const updateCaptionForItem = updateGalleryCaption.bind(null, item.id);
   const [state, formAction, pending] = useActionState(
     updateCaptionForItem,
@@ -22,7 +24,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
 
   async function handleDelete() {
     if (!item.image_url) return;
-    if (!confirm("Delete this photo? This can't be undone.")) return;
+    if (!confirm(t("deleteConfirm"))) return;
     setDeleting(true);
     await deleteGalleryImage(item.id, item.image_url);
     router.refresh();
@@ -43,9 +45,9 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           type="button"
           onClick={handleDelete}
           disabled={deleting}
-          className="absolute top-2 right-2 bg-black/60 px-2 py-1 font-admin-display text-[10px] font-bold tracking-wider text-white uppercase transition-colors hover:bg-admin-error disabled:opacity-50"
+          className="absolute top-2 end-2 bg-black/60 px-2 py-1 font-admin-display text-[10px] font-bold tracking-wider text-white uppercase transition-colors hover:bg-admin-error disabled:opacity-50"
         >
-          {deleting ? "…" : "Delete"}
+          {deleting ? t("deleting") : t("delete")}
         </button>
       </div>
       <form action={formAction} className="flex items-center gap-1 p-2">
@@ -53,7 +55,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           type="text"
           name="caption"
           defaultValue={item.caption ?? ""}
-          placeholder="Add a caption…"
+          placeholder={t("captionPlaceholder")}
           className="w-full border border-admin-border px-2 py-1 text-xs focus:border-admin-accent focus:outline-none"
         />
         <button
@@ -61,7 +63,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           disabled={pending}
           className="shrink-0 border border-admin-border px-2 py-1 font-admin-display text-[10px] font-bold tracking-wider text-admin-ink uppercase transition-colors hover:bg-admin-accent hover:text-admin-accent-ink disabled:opacity-50"
         >
-          {pending ? "…" : "Save"}
+          {pending ? t("saving") : t("save")}
         </button>
       </form>
       {state.error && (
@@ -74,10 +76,12 @@ function GalleryCard({ item }: { item: GalleryItem }) {
 }
 
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
+  const t = useTranslations("AdminGallery");
+
   if (items.length === 0) {
     return (
       <p className="border border-dashed border-admin-border p-8 text-center text-sm text-admin-muted">
-        No photos yet — upload your first one above.
+        {t("emptyState")}
       </p>
     );
   }

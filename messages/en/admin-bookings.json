@@ -1,0 +1,53 @@
+{
+  "AdminBookings": {
+    "eyebrow": "Overview // Real-Time Activity",
+    "heading": "Dashboard",
+    "subtitle": "Bookings, revenue, and status at a glance.",
+    "loadError": "Couldn't load bookings: {message}",
+    "kpi": {
+      "bookingsToday": "Bookings Today",
+      "bookingsThisWeek": "Bookings This Week",
+      "bookingsThisMonth": "Bookings This Month",
+      "estimatedRevenue": "Estimated Revenue",
+      "avgTicket": "Avg ticket: {price}",
+      "confirmedCompletedOnly": "Confirmed + completed only",
+      "popularServices": "Popular Services",
+      "noBookingsYet": "No bookings yet.",
+      "statusBreakdown": "Booking Status Breakdown"
+    },
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "tableHeading": "Bookings",
+    "filters": {
+      "status": "Status",
+      "all": "All",
+      "date": "Date",
+      "filter": "Filter",
+      "clear": "Clear filters"
+    },
+    "showingCount": "{count} showing",
+    "noMatch": "No bookings match these filters.",
+    "columns": {
+      "customer": "Customer",
+      "service": "Service",
+      "stylist": "Stylist",
+      "dateTime": "Date & Time",
+      "status": "Status",
+      "review": "Review",
+      "actions": "Actions"
+    },
+    "reviewed": "Reviewed",
+    "sendReview": "Send Review",
+    "reviewMessage": "Hi {name}! Thank you for visiting {salonName} for your {service}. If you have 10 seconds, please rate your experience with {stylist}: {url}",
+    "ourTeam": "us",
+    "statusActions": {
+      "confirm": "Confirm",
+      "complete": "Complete",
+      "cancel": "Cancel"
+    }
+  }
+}

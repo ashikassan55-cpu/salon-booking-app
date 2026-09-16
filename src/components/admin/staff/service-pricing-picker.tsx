@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { Service, StaffServicePricing } from "@/lib/types";
 import { formatCurrency } from "@/lib/currency";
 
@@ -17,6 +18,8 @@ export function ServicePricingPicker({
   value: StaffServicePricing[];
   onChange: (updated: StaffServicePricing[]) => void;
 }) {
+  const t = useTranslations("AdminStaff.pricing");
+
   function priceFor(serviceId: string) {
     return value.find((v) => v.serviceId === serviceId)?.customPrice ?? null;
   }
@@ -38,9 +41,7 @@ export function ServicePricingPicker({
 
   if (services.length === 0) {
     return (
-      <p className="text-xs text-admin-muted">
-        No services exist yet — add one under Services first.
-      </p>
+      <p className="text-xs text-admin-muted">{t("noServices")}</p>
     );
   }
 
@@ -65,7 +66,7 @@ export function ServicePricingPicker({
                 {service.name}
               </span>
               <span className="text-admin-muted">
-                (base {formatCurrency(service.price, false)})
+                {t("basePrice", { price: formatCurrency(service.price, false) })}
               </span>
             </label>
             <div className="flex items-center gap-1">
