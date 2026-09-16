@@ -3,7 +3,7 @@ import { PlaceholderImage } from "@/components/ui/placeholder-image";
 
 function GalleryTile({ item }: { item: GalleryItem }) {
   return (
-    <div className="relative mb-4 break-inside-avoid overflow-hidden">
+    <div className="relative overflow-hidden">
       {item.image_url ? (
         // eslint-disable-next-line @next/next/no-img-element -- Supabase Storage public URL, not a build-time asset
         <img
@@ -19,6 +19,45 @@ function GalleryTile({ item }: { item: GalleryItem }) {
           {item.caption}
         </span>
       )}
+    </div>
+  );
+}
+
+/** Round-robin distribution into a fixed number of columns — unlike CSS
+ * multi-column (`columns-*`), each column's rendered height is exactly the
+ * sum of its own tiles, so the container can never be taller than its
+ * tallest column. CSS multi-column's browser-side "balancing" pass was
+ * leaving a large dead gap below the actual photos with a small, uneven
+ * set of images (a known limitation of that layout, not a one-off bug). */
+function distributeIntoColumns(items: GalleryItem[], columnCount: number) {
+  const columns: GalleryItem[][] = Array.from({ length: columnCount }, () => []);
+  items.forEach((item, i) => columns[i % columnCount].push(item));
+  return columns;
+}
+
+function GalleryColumns({
+  items,
+  columnCount,
+  className = "",
+}: {
+  items: GalleryItem[];
+  columnCount: number;
+  className?: string;
+}) {
+  const columns = distributeIntoColumns(items, columnCount);
+  return (
+    // `className` supplies its own display utility (e.g. "flex lg:hidden")
+    // — deliberately not hardcoded here, since mixing a hardcoded "flex"
+    // with a caller-passed "hidden" at the same breakpoint is an
+    // unprefixed-utility conflict with no guaranteed winner.
+    <div className={`items-start gap-4 ${className}`}>
+      {columns.map((column, i) => (
+        <div key={i} className="flex flex-1 flex-col gap-4">
+          {column.map((item) => (
+            <GalleryTile key={item.id} item={item} />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
@@ -49,15 +88,19 @@ export function GallerySection({ items }: { items: GalleryItem[] }) {
         </p>
       </div>
 
-      {/* Masonry via CSS columns: every photo keeps its own natural aspect
-          ratio (no object-cover, no forced rectangle) — a mix of portrait
-          headshots and landscape shots never gets cropped or leaves
-          mismatched-height gaps, unlike a fixed-aspect grid. */}
-      <div className="mt-14 columns-2 gap-4 lg:columns-3">
-        {items.map((item) => (
-          <GalleryTile key={item.id} item={item} />
-        ))}
-      </div>
+      {/* Two pre-computed column layouts (2-col below lg, 3-col at lg+),
+          swapped via responsive visibility — avoids any client-side
+          re-layout/hydration for something this simple. */}
+      <GalleryColumns
+        items={items}
+        columnCount={2}
+        className="mt-14 flex lg:hidden"
+      />
+      <GalleryColumns
+        items={items}
+        columnCount={3}
+        className="mt-14 hidden lg:flex"
+      />
     </section>
   );
 }
